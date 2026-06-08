@@ -619,7 +619,9 @@ const ALLTIME=[
 ];
 const OPP=["Manchester City","Liverpool","Manchester United","Chelsea","Tottenham","Newcastle","Aston Villa",
  "Brighton","West Ham","Crystal Palace","Brentford","Fulham","Everton","Wolves","Nottm Forest","Bournemouth",
- "Leicester","Burnley","Sheffield Utd","Leeds","Southampton","Ipswich"];
+ "Leeds","Burnley","Sunderland"];
+const CLPOOL=["Real Madrid","Barcelona","Atlético Madrid","Athletic Club","Villarreal","Bayern Munich","Bayer Leverkusen","Eintracht Frankfurt","Borussia Dortmund","Paris Saint-Germain","Marseille","Monaco","Inter","Napoli","Juventus","Atalanta","Sporting CP","Benfica","PSV Eindhoven","Ajax","Union SG","Club Brugge","Galatasaray","Olympiacos","Slavia Prague","Qarabağ","Copenhagen","Bodø/Glimt","Pafos","Kairat Almaty"];
+const FAPOOL=["Manchester City","Liverpool","Manchester United","Chelsea","Tottenham","Newcastle","Aston Villa","Everton","West Ham","Crystal Palace","Brighton","Fulham","Leicester City","Southampton","Coventry City","Middlesbrough","West Brom","Norwich City","Sheffield Wednesday","Sheffield United","Stoke City","Hull City","Watford","Preston North End","Blackburn Rovers","Bolton Wanderers","Wrexham","Bradford City","Plymouth Argyle","Portsmouth","Mansfield Town","Notts County","Maidstone United","Eastleigh"];
 
 /* ===== SIM MATH (tuned via Monte-Carlo) ===== */
 function matchProbs(r){
@@ -648,8 +650,8 @@ function tieScore(o){
   if(o==='w'){const gf=1+pois(.75),ga=Math.max(0,Math.min(gf-1,pois(.5)));return {gf:gf,ga:ga};}
   const ga=1+pois(.75),gf=Math.max(0,Math.min(ga-1,pois(.5)));return {gf:gf,ga:ga};
 }
-function rOpp(prev){let o;do{o=OPP[Math.floor(Math.random()*OPP.length)];}while(o===prev&&OPP.length>1);return o;}
-function knockoutTie(adv,prev){const opp=rOpp(prev);
+function rOpp(prev,pool){pool=pool||OPP;let o;do{o=pool[Math.floor(Math.random()*pool.length)];}while(o===prev&&pool.length>1);return o;}
+function knockoutTie(adv,prev,pool){const opp=rOpp(prev,pool);
   if(Math.random()<.26){const g=1+pois(.7);return {opp:opp,gf:g,ga:g,won:adv,pens:true};}
   const sc=tieScore(adv?'w':'l');return {opp:opp,gf:sc.gf,ga:sc.ga,won:adv,pens:false};
 }
@@ -657,7 +659,7 @@ function faCupRun(r){
   const rounds=['Third Round','Fourth Round','Fifth Round','Quarter-Final','Semi-Final','Final'];
   const wp=Math.max(.18,Math.min(.9,.5+(r-84)*.03));
   const results=[];let won=false,prev=null;
-  for(let i=0;i<rounds.length;i++){const adv=Math.random()<wp,t=knockoutTie(adv,prev);prev=t.opp;
+  for(let i=0;i<rounds.length;i++){const adv=Math.random()<wp,t=knockoutTie(adv,prev,FAPOOL);prev=t.opp;
     results.push({round:rounds[i],opp:t.opp,gf:t.gf,ga:t.ga,won:t.won,pens:t.pens});
     if(!adv)break;if(i===rounds.length-1)won=true;}
   return {won:won,results:results};
@@ -665,13 +667,13 @@ function faCupRun(r){
 function clRun(r){
   const results=[];let prev=null,pts=0;
   const gw=Math.max(.2,Math.min(.82,.42+(r-85)*.03));
-  for(let i=1;i<=8;i++){const x=Math.random(),rr=x<gw?'w':x<gw+.26?'d':'l',sc=tieScore(rr),opp=rOpp(prev);prev=opp;
+  for(let i=1;i<=8;i++){const x=Math.random(),rr=x<gw?'w':x<gw+.26?'d':'l',sc=tieScore(rr),opp=rOpp(prev,CLPOOL);prev=opp;
     pts+=rr==='w'?3:rr==='d'?1:0;
     results.push({round:'MD'+i,opp:opp,gf:sc.gf,ga:sc.ga,won:rr==='w',drew:rr==='d',group:true});}
   if(pts<11)return {won:false,qualified:false,phase:'league',leaguePts:pts,results:results};
   const ko=pts>=16?['Round of 16','Quarter-Final','Semi-Final','Final']:['Play-off','Round of 16','Quarter-Final','Semi-Final','Final'];
   const kw=Math.max(.2,Math.min(.85,.53+(r-87)*.03));let won=false;
-  for(let i=0;i<ko.length;i++){const adv=Math.random()<kw,t=knockoutTie(adv,prev);prev=t.opp;
+  for(let i=0;i<ko.length;i++){const adv=Math.random()<kw,t=knockoutTie(adv,prev,CLPOOL);prev=t.opp;
     results.push({round:ko[i],opp:t.opp,gf:t.gf,ga:t.ga,won:t.won,pens:t.pens});
     if(!adv)break;if(i===ko.length-1)won=true;}
   return {won:won,qualified:true,phase:pts>=16?'top8':'playoff',leaguePts:pts,results:results};
