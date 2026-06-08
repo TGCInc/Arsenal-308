@@ -69,8 +69,8 @@
     background:linear-gradient(0deg,rgba(0,0,0,.18),transparent 30%),
       repeating-linear-gradient(0deg, var(--pitch) 0 12.5%, var(--pitch2) 12.5% 25%);
     box-shadow:inset 0 0 70px rgba(0,0,0,.45)}
-  .pitch:before{content:"";position:absolute;inset:10px;border:2px solid rgba(255,255,255,.34);border-radius:5px}
-  .pitch:after{content:"";position:absolute;left:50%;top:50%;width:78px;height:78px;border:2px solid rgba(255,255,255,.34);border-radius:50%;transform:translate(-50%,-50%)}
+  .pitch:before{content:"";position:absolute;inset:10px;border:2px solid rgba(255,255,255,.34);border-radius:5px;pointer-events:none}
+  .pitch:after{content:"";position:absolute;left:50%;top:50%;width:78px;height:78px;border:2px solid rgba(255,255,255,.34);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
   .midline{position:absolute;left:10px;right:10px;top:50%;height:2px;background:rgba(255,255,255,.34)}
   .midline:after{content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.6);transform:translate(-50%,-50%)}
   .box{position:absolute;left:50%;transform:translateX(-50%);width:48%;height:12%;border:2px solid rgba(255,255,255,.3)}
@@ -665,16 +665,16 @@ function faCupRun(r){
 function clRun(r){
   const results=[];let prev=null,pts=0;
   const gw=Math.max(.2,Math.min(.82,.42+(r-85)*.03));
-  for(let i=1;i<=6;i++){const x=Math.random(),rr=x<gw?'w':x<gw+.26?'d':'l',sc=tieScore(rr),opp=rOpp(prev);prev=opp;
+  for(let i=1;i<=8;i++){const x=Math.random(),rr=x<gw?'w':x<gw+.26?'d':'l',sc=tieScore(rr),opp=rOpp(prev);prev=opp;
     pts+=rr==='w'?3:rr==='d'?1:0;
-    results.push({round:'Group · MD'+i,opp:opp,gf:sc.gf,ga:sc.ga,won:rr==='w',drew:rr==='d',group:true});}
-  if(pts<8)return {won:false,qualified:false,groupPts:pts,results:results};
-  const rounds=['Round of 16','Quarter-Final','Semi-Final','Final'];
-  const kw=Math.max(.2,Math.min(.85,.5+(r-87)*.03));let won=false;
-  for(let i=0;i<rounds.length;i++){const adv=Math.random()<kw,t=knockoutTie(adv,prev);prev=t.opp;
-    results.push({round:rounds[i],opp:t.opp,gf:t.gf,ga:t.ga,won:t.won,pens:t.pens});
-    if(!adv)break;if(i===rounds.length-1)won=true;}
-  return {won:won,qualified:true,groupPts:pts,results:results};
+    results.push({round:'MD'+i,opp:opp,gf:sc.gf,ga:sc.ga,won:rr==='w',drew:rr==='d',group:true});}
+  if(pts<11)return {won:false,qualified:false,phase:'league',leaguePts:pts,results:results};
+  const ko=pts>=16?['Round of 16','Quarter-Final','Semi-Final','Final']:['Play-off','Round of 16','Quarter-Final','Semi-Final','Final'];
+  const kw=Math.max(.2,Math.min(.85,.53+(r-87)*.03));let won=false;
+  for(let i=0;i<ko.length;i++){const adv=Math.random()<kw,t=knockoutTie(adv,prev);prev=t.opp;
+    results.push({round:ko[i],opp:t.opp,gf:t.gf,ga:t.ga,won:t.won,pens:t.pens});
+    if(!adv)break;if(i===ko.length-1)won=true;}
+  return {won:won,qualified:true,phase:pts>=16?'top8':'playoff',leaguePts:pts,results:results};
 }
 function cupVerb(r){if(r.pens)return r.won?'won on pens vs':'lost on pens to';if(r.won)return 'beat';if(r.drew||r.gf===r.ga)return 'drew with';return 'lost to';}
 function mkRow(gf,ga,opp,verb,round,cls){return '<div class="frow '+(cls||'')+'">'+(round?'<span class="frd">'+round+'</span>':'')+'<span class="fsc">'+gf+'–'+ga+'</span><span class="fop">'+verb+' <b>'+opp+'</b></span></div>';}
@@ -1020,8 +1020,9 @@ function showResults(o){
   const faSec=`<div class="vsub" style="margin:0 0 8px">${faExit}</div><details class="more"><summary>Show the run · ${o.fa.results.length} ties</summary><div class="feed" style="margin-top:6px">${faList}</div></details>`;
   const clLast=o.cl.results[o.cl.results.length-1];
   const clList=o.cl.results.map(r=>mkRow(r.gf,r.ga,r.opp,cupVerb(r),r.round,r.won?'wln':r.drew?'drw':(r.gf===r.ga&&!r.pens?'drw':'lss'))).join('');
-  const clExit=o.cl.won?'🏆 Champions of Europe':(o.cl.qualified?'Knocked out in the '+clLast.round:'Eliminated in the group stage');
-  const clSec=`<div class="vsub" style="margin:0 0 8px">${clExit} · group stage ${o.cl.groupPts} pts</div><details class="more"><summary>Show the run · ${o.cl.results.length} games</summary><div class="feed" style="margin-top:6px">${clList}</div></details>`;
+  const clExit=o.cl.won?'🏆 Champions of Europe':'Knocked out in the '+clLast.round;
+  const clSub=o.cl.qualified?`${clExit} · league phase ${o.cl.leaguePts} pts${o.cl.phase==='top8'?' — top 8':' — via play-off'}`:`Eliminated in the league phase · ${o.cl.leaguePts} pts`;
+  const clSec=`<div class="vsub" style="margin:0 0 8px">${clSub}</div><details class="more"><summary>Show the run · ${o.cl.results.length} games</summary><div class="feed" style="margin-top:6px">${clList}</div></details>`;
   const all=ALLTIME.map(a=>({tm:a[0],yr:a[1],rt:a[2],you:false})).concat([{tm:'YOUR XI',yr:'this sim',rt:o.rating,you:true}]).sort((a,b)=>b.rt-a.rt);
   const myRank=all.findIndex(a=>a.you)+1;
   const atRows=all.map((a,i)=>`<div class="atr ${a.you?'you':''}"><span class="arnk">${i+1}</span>`+
