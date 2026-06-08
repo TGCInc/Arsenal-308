@@ -244,6 +244,7 @@
   details.more>summary::after{content:'\25be';font-size:10px}
   details.more[open]>summary::after{content:'\25b4'}
   .atab{border:2px solid var(--ink);border-radius:11px;overflow:hidden}
+  .atgap{text-align:center;font-family:'Spline Sans Mono';font-size:9px;letter-spacing:.16em;color:#a8927d;padding:6px 0;background:var(--cream2);border-bottom:1px solid rgba(35,23,18,.14)}
   .atr{display:flex;align-items:center;gap:9px;padding:7px 10px;border-bottom:1px solid rgba(35,23,18,.12);background:var(--cream2);font-size:12.5px}
   .atr:last-child{border-bottom:none}
   .atr .arnk{width:22px;flex:none;text-align:center;font-family:'Big Shoulders Display';font-weight:900;font-size:15px;color:#9a8569}
@@ -608,20 +609,35 @@ const leaderTier=fc=>fc>=.8?'Born Leader':fc>=.55?'Strong Leader':fc>=.25?'Decen
 
 /* ===== ALL-TIME GREATS (power ratings are estimates; rank vs these regardless of club) ===== */
 const ALLTIME=[
- ["Barcelona","2010-11",97],["Manchester City","2017-18",97],["Manchester City","2018-19",96],
- ["Arsenal","2003-04",96],["Liverpool","2019-20",96],["Manchester City","2022-23",96],
- ["Real Madrid","2016-17",96],["Bayern Munich","2019-20",96],["Manchester City","2023-24",95],
- ["Manchester United","1998-99",95],["Manchester United","2007-08",95],["AC Milan","1991-92",95],
- ["Chelsea","2004-05",94],["Manchester United","1999-00",94],["Liverpool","2018-19",94],
- ["Liverpool","1987-88",93],["Chelsea","2016-17",92],["Manchester United","1993-94",92],
- ["Arsenal","1997-98",91],["Tottenham","1960-61",90],["Nottingham Forest","1977-78",89],
- ["Blackburn Rovers","1994-95",88],["Leicester City","2015-16",87]
+ ["Barcelona","2010-11",97],["Manchester City","2017-18",97],
+ ["Manchester City","2018-19",96],["Arsenal","2003-04",96],["Liverpool","2019-20",96],["Manchester City","2022-23",96],["Real Madrid","2016-17",96],["Bayern Munich","2019-20",96],
+ ["Manchester City","2023-24",95],["Manchester United","1998-99",95],["Manchester United","2007-08",95],["AC Milan","1991-92",95],["Barcelona","2008-09",95],["Real Madrid","2013-14",95],["Inter","2009-10",95],["Paris Saint-Germain","2024-25",95],
+ ["Chelsea","2004-05",94],["Manchester United","1999-00",94],["Liverpool","2018-19",94],["Bayern Munich","2012-13",94],["Real Madrid","2011-12",94],["Barcelona","2014-15",94],["Juventus","2018-19",94],["Liverpool","2021-22",94],["Paris Saint-Germain","2025-26",94],
+ ["Liverpool","1987-88",93],["Chelsea","2016-17",93],["Real Madrid","2001-02",93],["Barcelona","2005-06",93],["Napoli","2022-23",93],["Manchester City","2020-21",93],["Borussia Dortmund","2012-13",93],["Real Madrid","2023-24",93],
+ ["Manchester United","1993-94",92],["Arsenal","1997-98",92],["Chelsea","2005-06",92],["AC Milan","2003-04",92],["Inter","2007-08",92],["Manchester United","2008-09",92],["Atlético Madrid","2013-14",92],["Arsenal","2025-26",92],
+ ["Liverpool","1978-79",91],["Real Madrid","1959-60",91],["Ajax","1971-72",91],["Leeds United","1991-92",91],["Aston Villa","1980-81",91],["Everton","1984-85",91],["Liverpool","2008-09",91],
+ ["Tottenham","1960-61",90],["Celtic","1966-67",90],["Marseille","1992-93",90],["Porto","2003-04",90],["Valencia","2003-04",90],["Ajax","1994-95",90],
+ ["Nottingham Forest","1977-78",89],["Benfica","1961-62",89],["Feyenoord","1969-70",89],["Steaua Bucharest","1985-86",89],["Red Star Belgrade","1990-91",89],["Deportivo","1999-00",89],
+ ["Blackburn Rovers","1994-95",88],["Borussia Dortmund","1996-97",88],["PSV Eindhoven","1987-88",88],["Aston Villa","1981-82",88],["Liverpool","2013-14",88],["Atalanta","2023-24",88],
+ ["Leicester City","2015-16",87],["Ipswich Town","1980-81",87],["Derby County","1971-72",87],["Monaco","2003-04",87],["Bayer Leverkusen","2001-02",87],["Liverpool","2001-02",87],
+ ["Everton","1986-87",86],["Wolves","1958-59",86],["Sheffield Wednesday","1992-93",86],["Norwich City","1992-93",86],["Coventry City","1986-87",86],
+ ["Newcastle","1995-96",85],["West Ham","1985-86",85],["Crystal Palace","1990-91",85],["Watford","1982-83",85],["Sunderland","1972-73",85],
+ ["Ipswich Town","2000-01",84],["Bolton Wanderers","2004-05",84],["Charlton Athletic","2003-04",84],["Fulham","2008-09",84],["Tottenham","2009-10",84],
+ ["Wigan Athletic","2012-13",83],["Portsmouth","2007-08",83],["Birmingham City","2010-11",83],["Stoke City","2010-11",83],["Swansea City","2012-13",83],
+ ["Hull City","2008-09",82],["Reading","2005-06",82],["Blackpool","2010-11",82],["Cardiff City","2012-13",82],["Burnley","2009-10",82],
+ ["Leeds United","2019-20",80],["Norwich City","2018-19",80],["Wolves","2017-18",80],["Fulham","2021-22",80],["Bournemouth","2014-15",80],
+ ["Sunderland","2025-26",78],["Brentford","2020-21",78],["Luton Town","2022-23",78],["Sheffield United","2022-23",78],
+ ["Coventry City","2023-24",76],["Ipswich Town","2023-24",76],["Wrexham","2023-24",76],["Plymouth Argyle","2022-23",76],
+ ["Notts County","2022-23",74],["Stockport County","2023-24",74],["Mansfield Town","2023-24",74],
+ ["Wrexham","2022-23",72],["Bradford City","2012-13",72],["Lincoln City","2016-17",72],
+ ["Maidstone United","2023-24",70],["Sutton United","1988-89",70],["Hereford United","1971-72",69],
+ ["Eastleigh","2015-16",67],["Wigan Athletic","1953-54",66]
 ];
 const OPP=["Manchester City","Liverpool","Manchester United","Chelsea","Tottenham","Newcastle","Aston Villa",
  "Brighton","West Ham","Crystal Palace","Brentford","Fulham","Everton","Wolves","Nottm Forest","Bournemouth",
  "Leeds","Burnley","Sunderland"];
-const CLPOOL=["Real Madrid","Barcelona","Atlético Madrid","Athletic Club","Villarreal","Bayern Munich","Bayer Leverkusen","Eintracht Frankfurt","Borussia Dortmund","Paris Saint-Germain","Marseille","Monaco","Inter","Napoli","Juventus","Atalanta","Sporting CP","Benfica","PSV Eindhoven","Ajax","Union SG","Club Brugge","Galatasaray","Olympiacos","Slavia Prague","Qarabağ","Copenhagen","Bodø/Glimt","Pafos","Kairat Almaty"];
-const FAPOOL=["Manchester City","Liverpool","Manchester United","Chelsea","Tottenham","Newcastle","Aston Villa","Everton","West Ham","Crystal Palace","Brighton","Fulham","Leicester City","Southampton","Coventry City","Middlesbrough","West Brom","Norwich City","Sheffield Wednesday","Sheffield United","Stoke City","Hull City","Watford","Preston North End","Blackburn Rovers","Bolton Wanderers","Wrexham","Bradford City","Plymouth Argyle","Portsmouth","Mansfield Town","Notts County","Maidstone United","Eastleigh"];
+const CLPOOL=[["Real Madrid",92],["Barcelona",90],["Atlético Madrid",86],["Athletic Club",80],["Villarreal",80],["Bayern Munich",92],["Bayer Leverkusen",85],["Eintracht Frankfurt",80],["Borussia Dortmund",84],["Paris Saint-Germain",92],["Marseille",82],["Monaco",80],["Inter",88],["Napoli",86],["Juventus",85],["Atalanta",84],["Sporting CP",82],["Benfica",83],["PSV Eindhoven",81],["Ajax",80],["Union SG",76],["Club Brugge",78],["Galatasaray",81],["Olympiacos",77],["Slavia Prague",74],["Qarabağ",72],["Copenhagen",75],["Bodø/Glimt",76],["Pafos",70],["Kairat Almaty",70]];
+const FAPOOL=[["Manchester City",90],["Liverpool",89],["Manchester United",84],["Chelsea",86],["Tottenham",83],["Newcastle",85],["Aston Villa",84],["Everton",80],["West Ham",80],["Crystal Palace",81],["Brighton",82],["Fulham",80],["Leicester City",76],["Southampton",74],["Coventry City",74],["Middlesbrough",75],["West Brom",75],["Norwich City",74],["Sheffield Wednesday",73],["Sheffield United",75],["Stoke City",73],["Hull City",73],["Watford",74],["Preston North End",72],["Blackburn Rovers",73],["Bolton Wanderers",70],["Wrexham",70],["Bradford City",67],["Plymouth Argyle",69],["Portsmouth",70],["Mansfield Town",66],["Notts County",64],["Maidstone United",60],["Eastleigh",60]];
 
 /* ===== SIM MATH (tuned via Monte-Carlo) ===== */
 function matchProbs(r){
@@ -645,37 +661,29 @@ const GW={ST:10,CF:10,RW:6,LW:6,CAM:5,RM:4,LM:4,CM:3,CDM:1.2,RWB:1.5,LWB:1.5,RB:
 const AW={CAM:8,RW:7,LW:7,RM:7,LM:7,CM:5,ST:4,CF:4,CDM:2,RWB:3,LWB:3,RB:2.5,LB:2.5,CB:.8,GK:.2};
 const DEF=["GK","CB","RB","LB","RWB","LWB"];
 const wpick=w=>{let t=w.reduce((a,b)=>a+b,0),x=Math.random()*t;for(let i=0;i<w.length;i++){if((x-=w[i])<=0)return i;}return w.length-1;};
-function tieScore(o){
-  if(o==='d'){const g=Math.min(3,pois(.9));return {gf:g,ga:g};}
-  if(o==='w'){const gf=1+pois(.75),ga=Math.max(0,Math.min(gf-1,pois(.5)));return {gf:gf,ga:ga};}
-  const ga=1+pois(.75),gf=Math.max(0,Math.min(ga-1,pois(.5)));return {gf:gf,ga:ga};
-}
-function rOpp(prev,pool){pool=pool||OPP;let o;do{o=pool[Math.floor(Math.random()*pool.length)];}while(o===prev&&pool.length>1);return o;}
-function knockoutTie(adv,prev,pool){const opp=rOpp(prev,pool);
-  if(Math.random()<.26){const g=1+pois(.7);return {opp:opp,gf:g,ga:g,won:adv,pens:true};}
-  const sc=tieScore(adv?'w':'l');return {opp:opp,gf:sc.gf,ga:sc.ga,won:adv,pens:false};
-}
+function matchGoals(R,Ro){const gap=R-Ro,la=Math.max(.16,Math.min(3.3,1.15+gap*0.075)),ld=Math.max(.16,Math.min(3.3,1.15-gap*0.075));return {gf:pois(la),ga:pois(ld),gap:gap};}
+function rOpp(prev,pool,minR){pool=pool||OPP;let src=minR?pool.filter(o=>(Array.isArray(o)?o[1]:84)>=minR):pool;if(!src.length)src=pool;let o;do{o=src[Math.floor(Math.random()*src.length)];}while((Array.isArray(o)?o[0]:o)===prev&&src.length>1);return o;}
+function knockoutTie(R,prev,pool,minR){const o=rOpp(prev,pool,minR),nm=Array.isArray(o)?o[0]:o,Ro=Array.isArray(o)?o[1]:84;const m=matchGoals(R,Ro);let won,pens=false;if(m.gf>m.ga)won=true;else if(m.gf<m.ga)won=false;else{pens=true;won=Math.random()<1/(1+Math.exp(-m.gap/7));}return {opp:nm,gf:m.gf,ga:m.ga,won:won,pens:pens};}
+function leagueGame(R,prev,pool){const o=rOpp(prev,pool),nm=Array.isArray(o)?o[0]:o,Ro=Array.isArray(o)?o[1]:84;const m=matchGoals(R,Ro);const res=m.gf>m.ga?'w':m.gf<m.ga?'l':'d';return {opp:nm,gf:m.gf,ga:m.ga,res:res};}
 function faCupRun(r){
-  const rounds=['Third Round','Fourth Round','Fifth Round','Quarter-Final','Semi-Final','Final'];
-  const wp=Math.max(.18,Math.min(.9,.5+(r-84)*.03));
+  const rounds=['Third Round','Fourth Round','Fifth Round','Quarter-Final','Semi-Final','Final'],floors=[0,0,0,72,80,83];
   const results=[];let won=false,prev=null;
-  for(let i=0;i<rounds.length;i++){const adv=Math.random()<wp,t=knockoutTie(adv,prev,FAPOOL);prev=t.opp;
+  for(let i=0;i<rounds.length;i++){const t=knockoutTie(r,prev,FAPOOL,floors[i]);prev=t.opp;
     results.push({round:rounds[i],opp:t.opp,gf:t.gf,ga:t.ga,won:t.won,pens:t.pens});
-    if(!adv)break;if(i===rounds.length-1)won=true;}
+    if(!t.won)break;if(i===rounds.length-1)won=true;}
   return {won:won,results:results};
 }
 function clRun(r){
   const results=[];let prev=null,pts=0;
-  const gw=Math.max(.2,Math.min(.82,.42+(r-85)*.03));
-  for(let i=1;i<=8;i++){const x=Math.random(),rr=x<gw?'w':x<gw+.26?'d':'l',sc=tieScore(rr),opp=rOpp(prev,CLPOOL);prev=opp;
-    pts+=rr==='w'?3:rr==='d'?1:0;
-    results.push({round:'MD'+i,opp:opp,gf:sc.gf,ga:sc.ga,won:rr==='w',drew:rr==='d',group:true});}
+  for(let i=1;i<=8;i++){const g=leagueGame(r,prev,CLPOOL);prev=g.opp;
+    pts+=g.res==='w'?3:g.res==='d'?1:0;
+    results.push({round:'MD'+i,opp:g.opp,gf:g.gf,ga:g.ga,won:g.res==='w',drew:g.res==='d',group:true});}
   if(pts<11)return {won:false,qualified:false,phase:'league',leaguePts:pts,results:results};
   const ko=pts>=16?['Round of 16','Quarter-Final','Semi-Final','Final']:['Play-off','Round of 16','Quarter-Final','Semi-Final','Final'];
-  const kw=Math.max(.2,Math.min(.85,.53+(r-87)*.03));let won=false;
-  for(let i=0;i<ko.length;i++){const adv=Math.random()<kw,t=knockoutTie(adv,prev,CLPOOL);prev=t.opp;
+  const floors=pts>=16?[78,82,85,87]:[76,78,82,85,87];let won=false;
+  for(let i=0;i<ko.length;i++){const t=knockoutTie(r,prev,CLPOOL,floors[i]);prev=t.opp;
     results.push({round:ko[i],opp:t.opp,gf:t.gf,ga:t.ga,won:t.won,pens:t.pens});
-    if(!adv)break;if(i===ko.length-1)won=true;}
+    if(!t.won)break;if(i===ko.length-1)won=true;}
   return {won:won,qualified:true,phase:pts>=16?'top8':'playoff',leaguePts:pts,results:results};
 }
 function cupVerb(r){if(r.pens)return r.won?'won on pens vs':'lost on pens to';if(r.won)return 'beat';if(r.drew||r.gf===r.ga)return 'drew with';return 'lost to';}
@@ -1026,9 +1034,14 @@ function showResults(o){
   const clSub=o.cl.qualified?`${clExit} · league phase ${o.cl.leaguePts} pts${o.cl.phase==='top8'?' — top 8':' — via play-off'}`:`Eliminated in the league phase · ${o.cl.leaguePts} pts`;
   const clSec=`<div class="vsub" style="margin:0 0 8px">${clSub}</div><details class="more"><summary>Show the run · ${o.cl.results.length} games</summary><div class="feed" style="margin-top:6px">${clList}</div></details>`;
   const all=ALLTIME.map(a=>({tm:a[0],yr:a[1],rt:a[2],you:false})).concat([{tm:'YOUR XI',yr:'this sim',rt:o.rating,you:true}]).sort((a,b)=>b.rt-a.rt);
-  const myRank=all.findIndex(a=>a.you)+1;
-  const atRows=all.map((a,i)=>`<div class="atr ${a.you?'you':''}"><span class="arnk">${i+1}</span>`+
-    `<span class="atm"><b>${a.tm}</b> <span class="ayr">${a.yr}</span></span><span class="art">${a.you?a.rt.toFixed(1):a.rt}</span></div>`).join('');
+  const myRank=all.findIndex(a=>a.you)+1,N=all.length;
+  const show=new Set();for(let i=0;i<Math.min(3,N);i++)show.add(i);for(let i=myRank-4;i<=myRank+2;i++)if(i>=0&&i<N)show.add(i);
+  const idxs=[...show].sort((a,b)=>a-b);
+  const atRow=(a,i)=>`<div class="atr ${a.you?'you':''}"><span class="arnk">${i+1}</span>`+
+    `<span class="atm"><b>${a.tm}</b> <span class="ayr">${a.yr}</span></span><span class="art">${a.you?a.rt.toFixed(1):a.rt}</span></div>`;
+  let atRows='',pv=-1;
+  idxs.forEach(i=>{if(i>pv+1)atRows+=`<div class="atgap">⋯ ${i-pv-1} more ⋯</div>`;atRows+=atRow(all[i],i);pv=i;});
+  if(pv<N-1)atRows+=`<div class="atgap">⋯ ${N-1-pv} more ⋯</div>`;
   el.innerHTML=
     `<div class="verdict ${o.perfect||treble?'win':''}">${v}</div><div class="vsub">${sub}${tag}</div>`+
     `<div class="res-sec"><div class="res-h"><span>Trophy Cabinet</span></div>${cab}<div class="vsub" style="margin-top:8px">${cupNote}</div></div>`+
@@ -1038,8 +1051,8 @@ function showResults(o){
     `<div class="res-sec"><div class="res-h"><span>Premier League</span></div><div class="vsub" style="margin:0 0 8px">${o.w}W ${o.d}D ${o.l}L · ${o.pts} pts · finished <b>${ordinal(actPos)}</b></div>${leagueSec}</div>`+
     `<div class="res-sec"><div class="res-h"><span>FA Cup</span></div>${faSec}</div>`+
     `<div class="res-sec"><div class="res-h"><span>Champions League</span></div>${clSec}</div>`+
-    `<div class="res-sec"><div class="res-h"><span>Greatest Teams Of All Time</span></div>`+
-      `<div class="vsub" style="margin:0 0 8px">Your XI ranks <b>#${myRank}</b> of all time by rating.</div><div class="atab">${atRows}</div></div>`+
+    `<div class="res-sec"><div class="res-h"><span>All-Time Power Ranking</span></div>`+
+      `<div class="vsub" style="margin:0 0 8px">Your XI ranks <b>#${myRank}</b> of ${N} all-time teams by rating.</div><div class="atab">${atRows}</div></div>`+
     `<div class="res-sec"><div class="saverow"><input id="initials" maxlength="14" placeholder="Your name"><button class="ghost-btn" id="saveBtn">Save</button></div>`+
     `<button class="ghost-btn" id="viewLb" style="margin-top:7px;font-size:11px">🏆 View Leaderboard</button></div>`;
   document.getElementById('saveBtn').addEventListener('click',()=>{
