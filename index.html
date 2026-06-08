@@ -91,7 +91,7 @@
   .slot .rt{display:inline-block;margin-top:3px;font-family:'Spline Sans Mono';font-size:8px;font-weight:700;background:var(--gold);color:var(--ink);padding:1px 5px;border-radius:5px;letter-spacing:.06em}
 
   .tray{padding:12px}
-  .reel{background:linear-gradient(180deg,#241712,#170d09);border:2px solid var(--gold);border-radius:12px;padding:12px;text-align:center;color:var(--cream);position:relative;overflow:hidden}
+  .reel{margin-top:11px;background:linear-gradient(180deg,#241712,#170d09);border:2px solid var(--gold);border-radius:12px;padding:12px;text-align:center;color:var(--cream);position:relative;overflow:hidden}
   .reel:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 4px);pointer-events:none}
   .reel:after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(231,188,87,.18);transform:translateY(-50%)}
   .reel .yr{font-family:'Big Shoulders Display';font-weight:900;font-size:clamp(38px,12vw,46px);line-height:.9;color:var(--gold);letter-spacing:.02em;text-shadow:0 2px 0 rgba(0,0,0,.5)}
@@ -108,6 +108,7 @@
   .ghost-btn{background:var(--cream2);color:var(--ink);font-size:14px;padding:12px;box-shadow:0 4px 0 var(--ink)}
   .roll-btn:active,.sim-btn:active,.ghost-btn:active{transform:translateY(5px);box-shadow:0 0 0 var(--ink)}
   .roll-btn:disabled{opacity:.5;cursor:not-allowed}
+  .roll-btn:disabled:not(.spinning){opacity:1;background:#c7bca9;color:#7a6d59;border-color:#ab9f8b;box-shadow:0 5px 0 #ab9f8b;text-shadow:none}
   .roll-btn .ico{display:inline-block;margin-right:7px}.roll-btn.spinning .ico{animation:rock .22s linear infinite}
   @keyframes rock{0%,100%{transform:rotate(-16deg)}50%{transform:rotate(16deg)}}
 
@@ -130,7 +131,12 @@
     color:var(--currant2);background:rgba(78,13,24,.1);border-radius:4px;padding:1px 4px}
   .chip .crt{font-family:'Big Shoulders Display';font-weight:900;font-size:25px;color:var(--currant);flex:none}
   .chip.sel{background:var(--gold);border-color:var(--red);box-shadow:0 0 0 3px rgba(226,35,26,.25)}
-  .chip.used{opacity:.34;cursor:default;box-shadow:none}.chip.used .cnm{text-decoration:line-through}.chip.used .crt{color:#999}
+    .chip.used,.chip.nofit{opacity:.62;cursor:not-allowed;box-shadow:none;background:#e8dfce;border-color:#c7bba6;filter:grayscale(.4)}
+  .chip.used .cnm,.chip.nofit .cnm{color:#8f8169}.chip.used .cnm{text-decoration:line-through}
+  .chip.used .crt,.chip.nofit .crt{color:#a99c86}
+  .chip.used:active,.chip.nofit:active{transform:none;box-shadow:none}
+  .chip.used .l::after,.chip.nofit .l::after{display:block;margin-top:4px;font-family:'Spline Sans Mono';font-size:7px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .chip.used .l::after{content:"\2713 In your XI";color:#3f7a4f}
 
   .ticker{padding:16px 14px;text-align:center}
   .ticker .big{font-family:'Big Shoulders Display';font-weight:900;font-size:84px;line-height:.82;color:var(--currant)}
@@ -184,7 +190,7 @@
     font-size:11px;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 1px 2px rgba(0,0,0,.5)}
   .pitch.capmode .slot.filled .disc{animation:glow 1.1s infinite;border-color:var(--gold)}
   .pitch.capmode .slot.empty{opacity:.35}
-  .chip.nofit{opacity:.34;cursor:default;box-shadow:none}.chip.nofit .crt{color:#999}
+  .chip.nofit .l::after{content:"No open spot";color:#a14a3a}
   .pill.locked{opacity:.38;cursor:not-allowed}.pill.locked:active{transform:none}
   .toggle.locked,.toggle.locked .sw{opacity:.4;cursor:not-allowed}
   /* ===== PREDICTION (pre-sim) ===== */
@@ -311,8 +317,8 @@
     <div class="tray" id="tray">
       <div class="stage" id="stage"><div class="step" data-s="roll"><b>01</b>Roll</div><div class="step" data-s="build"><b>02</b>Build</div><div class="step" data-s="sim"><b>03</b>Simulate</div></div>
       <div class="pipstrip" id="pips"></div>
-      <div class="reel" id="reel"><div class="yr" id="reelYr">— — — —</div><div class="th" id="reelTh">Pull the lever</div></div>
       <button class="roll-btn" id="rollBtn"><span class="ico">⊙</span> Roll The Seasons</button>
+      <div class="reel" id="reel"><div class="yr" id="reelYr">— — — —</div><div class="th" id="reelTh">Pull the lever</div></div>
       <div class="instruct" id="instruct">The reel spins through every Premier League season. Lock one, then draft from that squad.</div>
       <div class="place-row hidden" id="placeRow"></div>
       <div class="squad hidden" id="squad"></div>
@@ -633,10 +639,10 @@ function cupRun(r,names,base,slope,mid,lo,hi){
 const pitch=document.getElementById('pitch'),reel=document.getElementById('reel'),reelYr=document.getElementById('reelYr'),reelTh=document.getElementById('reelTh');
 const RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
 let slotEls=[],chipEls=[];
-pitch.addEventListener('click',e=>{const sl=e.target.closest('.slot');if(sl&&sl.dataset.i!=='')slotClick(+sl.dataset.i);});
-squadEl.addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c||c.classList.contains('used')||c.classList.contains('nofit'))return;const p=currentSeason&&currentSeason.pl[+c.dataset.i];if(p)selectPlayer(p);});
 const rollBtn=document.getElementById('rollBtn'),squadEl=document.getElementById('squad'),instruct=document.getElementById('instruct'),tray=document.getElementById('tray'),ticker=document.getElementById('ticker'),placeRow=document.getElementById('placeRow');
 const stageEl=document.getElementById('stage'),pipsEl=document.getElementById('pips');
+pitch.addEventListener('click',e=>{const sl=e.target.closest('.slot');if(sl&&sl.dataset.i!=='')slotClick(+sl.dataset.i);});
+squadEl.addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c||c.classList.contains('used')||c.classList.contains('nofit'))return;const p=currentSeason&&currentSeason.pl[+c.dataset.i];if(p)selectPlayer(p);});
 function jump(el,block,delay){if(!el)return;const go=()=>{try{const r=el.getBoundingClientRect(),vh=window.innerHeight||document.documentElement.clientHeight;if(r.top>=0&&r.bottom<=vh)return;el.scrollIntoView({behavior:RM?'auto':'smooth',block:block||'center'});}catch(e){}};setTimeout(go,delay==null?70:delay);}
 function setStage(n){if(!stageEl)return;const order=['roll','build','sim'],ai=order.indexOf(n);[...stageEl.children].forEach(st=>{const i=order.indexOf(st.dataset.s);st.classList.toggle('on',i===ai);st.classList.toggle('done',i<ai);});}
 function renderPips(){if(!pipsEl)return;const n=board.filter(s=>s.player).length;if(pipsEl.children.length!==11){pipsEl.innerHTML='';for(let i=0;i<11;i++){const d=document.createElement('div');d.className='pip';pipsEl.appendChild(d);}}[...pipsEl.children].forEach((p,i)=>{const was=p.classList.contains('filled');p.classList.toggle('filled',i<n);if(i<n&&!was){p.classList.add('pop');setTimeout(()=>p.classList.remove('pop'),220);}});}
@@ -706,12 +712,15 @@ function renderSquad(){
   if(!currentSeason){squadEl.classList.add('hidden');return;}
   squadEl.classList.remove('hidden');squadEl.innerHTML='';chipEls=[];
   const fresh=squadEl.classList.contains('fresh');
-  currentSeason.pl.forEach((p,i)=>{
+  let order=currentSeason.pl.map((p,i)=>i);
+  if(showRatings)order.sort((a,b)=>R(currentSeason.pl[b])-R(currentSeason.pl[a]));
+  order.forEach((idx,pos)=>{
+    const p=currentSeason.pl[idx];
     const used=draftedNames.has(p[0]),sel=pending&&pending.player[0]===p[0];
     const placeable=board.some(s=>!s.player&&s.accept.some(a=>p[1].includes(a)));
-    const c=document.createElement('div');c.dataset.i=i;
+    const c=document.createElement('div');c.dataset.i=idx;
     c.className='chip'+(used?' used':'')+(!used&&!placeable?' nofit':'')+(sel?' sel':'');
-    if(fresh)c.style.animationDelay=(i*0.028)+'s';
+    if(fresh)c.style.animationDelay=(pos*0.028)+'s';
     const rt=showRatings?`<div class="crt">${R(p)}</div>`:'';
     c.innerHTML=`<div class="l"><div class="cnm">${p[0]}</div><div class="cpos">${p[1].join(' · ')}</div></div>${rt}`;
     squadEl.appendChild(c);chipEls.push(c);
@@ -735,7 +744,7 @@ function rollSeasons(){
       if(!fits){mustPick=false;rollBtn.disabled=false;currentSeason=null;squadEl.classList.add('hidden');renderPitch();
         instruct.innerHTML=`No one from <b>${final.yr}</b> fits an open slot — that roll's on the house. Roll again.`;setStage('roll');}
       else{mustPick=true;rollBtn.disabled=true;squadEl.classList.add('fresh');renderSquad();renderPitch();
-        instruct.innerHTML=`<b>${final.yr}</b> is out — you must draft <b>one</b> player from this squad. Tap a player, then a glowing spot.`;setStage('build');jump(squadEl,'center');}}
+        instruct.innerHTML=`<b>${final.yr}</b> is out — you must draft <b>one</b> player from this squad. Tap a player, then a glowing spot.`;setStage('build');jump(reel,'start');}}
   })();
 }
 
