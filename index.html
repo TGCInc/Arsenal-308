@@ -186,6 +186,96 @@
   .pitch.capmode .slot.empty{opacity:.35}
   .chip.nofit{opacity:.34;cursor:default;box-shadow:none}.chip.nofit .crt{color:#999}
   .pill.locked{opacity:.38;cursor:not-allowed}.pill.locked:active{transform:none}
+  .toggle.locked,.toggle.locked .sw{opacity:.4;cursor:not-allowed}
+  /* ===== PREDICTION (pre-sim) ===== */
+  .predict{border:2px dashed var(--gold-deep);border-radius:12px;background:rgba(231,188,87,.14);padding:11px 13px;margin-top:11px;text-align:center}
+  .predict .pk{font-family:'Spline Sans Mono';font-size:8.5px;letter-spacing:.22em;color:#8a7358;text-transform:uppercase}
+  .predict .pf{font-family:'Big Shoulders Display';font-weight:900;font-size:24px;color:var(--currant);line-height:1;margin-top:3px}
+  .predict .pp{font-size:11.5px;color:#6b5b50;margin-top:4px}.predict .pp b{color:var(--red2)}
+  /* ===== RESULTS ===== */
+  .res-sec{margin-top:16px}
+  .res-h{font-family:'Spline Sans Mono';font-size:9px;letter-spacing:.24em;color:#8a7358;text-transform:uppercase;text-align:left;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+  .res-h:before,.res-h:after{content:"";flex:1;height:1px;background:rgba(138,115,88,.3)}.res-h span{flex:none}
+  .cab{display:flex;gap:8px;justify-content:center}
+  .trophy{flex:1;border:2px solid var(--ink);border-radius:11px;background:var(--cream2);padding:11px 4px;text-align:center;transition:transform .1s}
+  .trophy .ti{font-size:30px;line-height:1;filter:grayscale(1);opacity:.32}
+  .trophy .tl{font-family:'Big Shoulders Display';font-weight:800;font-size:12px;letter-spacing:.04em;text-transform:uppercase;margin-top:3px;color:#9a8569}
+  .trophy.won{background:linear-gradient(180deg,#fff7e4,var(--gold));border-color:var(--red);box-shadow:0 0 0 3px rgba(226,35,26,.18),0 4px 0 var(--gold-deep)}
+  .trophy.won .ti{filter:none;opacity:1}.trophy.won .tl{color:var(--currant)}
+  .treble-ban{font-family:'Big Shoulders Display';font-weight:900;font-size:20px;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:var(--red);margin-top:10px}
+  .awards{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .award{border:2px solid var(--ink);border-radius:11px;background:var(--cream2);padding:10px 11px;text-align:left}
+  .award.star{background:linear-gradient(180deg,#fff7e4,rgba(231,188,87,.5));border-color:var(--gold-deep)}
+  .award .ak{font-family:'Spline Sans Mono';font-size:8px;letter-spacing:.12em;color:#8a7358;text-transform:uppercase}
+  .award .an{font-family:'Big Shoulders Display';font-weight:900;font-size:17px;color:var(--ink);line-height:1.02;margin-top:3px}
+  .award .as{font-family:'Spline Sans Mono';font-size:10px;font-weight:700;color:var(--currant2);margin-top:3px}
+  .ptab{border:2px solid var(--ink);border-radius:11px;overflow:hidden}
+  .ptr{display:flex;align-items:center;gap:8px;padding:7px 9px;border-bottom:1px solid rgba(35,23,18,.14);background:var(--cream2);font-size:12px}
+  .ptr:last-child{border-bottom:none}.ptr.head{background:var(--ink);color:#c7a98f;font-family:'Spline Sans Mono';font-size:8.5px;letter-spacing:.1em;text-transform:uppercase}
+  .ptr .pp2{font-family:'Spline Sans Mono';font-weight:700;font-size:8px;width:34px;flex:none;text-align:center;border-radius:4px;padding:2px 0;color:#fff}
+  .ptr .pn{flex:1;min-width:0;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ptr .pc{width:30px;flex:none;text-align:right;font-family:'Big Shoulders Display';font-weight:900;font-size:15px}
+  .ptr .pc.g{color:#1f7a3a}.ptr .pc.a{color:#1668b0}.ptr .pc.c{color:#8a7358}
+  .ptr.head .pc{font-family:'Spline Sans Mono';font-size:8.5px;font-weight:700}
+  .statcards{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .statcard{border:2px solid var(--ink);border-radius:11px;background:var(--cream2);padding:11px;text-align:center}
+  .statcard .sn{font-family:'Big Shoulders Display';font-weight:900;font-size:30px;color:var(--currant);line-height:.9}
+  .statcard .sn.sm{font-size:21px;color:var(--ink)}.statcard .sn.win{color:#1f7a3a}
+  .statcard .sl{font-family:'Spline Sans Mono';font-size:8.5px;letter-spacing:.12em;color:#8a7358;text-transform:uppercase;margin-top:5px}
+  .feed{display:flex;flex-direction:column;gap:6px}
+  .frow{display:flex;align-items:center;gap:9px;border:2px solid var(--ink);border-radius:9px;background:var(--cream2);padding:7px 10px;font-size:12px}
+  .frow .fsc{font-family:'Spline Sans Mono';font-weight:700;font-size:13px;flex:none;width:40px;text-align:center;color:var(--ink)}
+  .frow .fop{flex:1;min-width:0;color:#6b5b50}.frow .fop b{color:var(--ink)}
+  .frow.big{background:linear-gradient(90deg,rgba(31,122,58,.16),var(--cream2))}
+  .atab{border:2px solid var(--ink);border-radius:11px;overflow:hidden}
+  .atr{display:flex;align-items:center;gap:9px;padding:7px 10px;border-bottom:1px solid rgba(35,23,18,.12);background:var(--cream2);font-size:12.5px}
+  .atr:last-child{border-bottom:none}
+  .atr .arnk{width:22px;flex:none;text-align:center;font-family:'Big Shoulders Display';font-weight:900;font-size:15px;color:#9a8569}
+  .atr .atm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.atr .atm b{font-weight:800}.atr .ayr{color:#9a8569;font-size:10px}
+  .atr .art{flex:none;font-family:'Big Shoulders Display';font-weight:900;font-size:18px;color:var(--currant)}
+  .atr.you{background:linear-gradient(90deg,var(--gold),#fff7e4);border-left:4px solid var(--red)}
+  .atr.you .atm,.atr.you .arnk{color:var(--currant)}.atr.you .atm b{color:var(--red2)}
+  .atfade{position:relative}.atfade:after{content:"";position:absolute;left:0;right:0;bottom:0;height:34px;background:linear-gradient(transparent,var(--cream));pointer-events:none}
+  /* ===== STAGE + PROGRESS ===== */
+  .stage{display:flex;gap:6px;margin-bottom:9px}
+  .stage .step{flex:1;text-align:center;border:2px solid var(--ink);border-radius:9px;background:var(--cream2);padding:6px 2px;font-family:'Big Shoulders Display';font-weight:800;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#9a8569;opacity:.5;transition:all .22s}
+  .stage .step b{display:block;font-family:'Spline Sans Mono';font-size:7.5px;font-weight:700;opacity:.7;margin-bottom:1px}
+  .stage .step.done{opacity:.9;color:var(--currant)}
+  .stage .step.on{opacity:1;background:linear-gradient(180deg,#fff7e4,var(--gold));border-color:var(--red);color:var(--currant);box-shadow:0 3px 0 var(--gold-deep)}
+  .pipstrip{display:flex;gap:4px;justify-content:center;margin-bottom:11px;height:6px}
+  .pip{width:14px;height:6px;border-radius:3px;background:rgba(35,23,18,.16);transition:background .25s,transform .22s cubic-bezier(.2,.7,.3,1)}
+  .pip.filled{background:var(--red)}
+  .pip.pop{transform:scaleY(1.5)}
+  /* ===== REEL SLOT-MACHINE POLISH ===== */
+  @keyframes rollup{from{transform:translateY(10px);opacity:.15}to{transform:translateY(0);opacity:1}}
+  .reel.tick .yr{animation:rollup .11s ease-out}
+  .reel.spin{filter:blur(.35px)}
+  @keyframes reelland{0%{transform:scale(1.07)}55%{transform:scale(.99)}100%{transform:scale(1)}}
+  .reel.landed{animation:reelland .4s ease-out;box-shadow:0 0 0 3px rgba(231,188,87,.7),0 0 26px rgba(231,188,87,.55)}
+  /* ===== SMOOTH-IN ANIMATIONS ===== */
+  @keyframes slotpop{0%{transform:translate(-50%,-50%) scale(.45);opacity:0}60%{transform:translate(-50%,-50%) scale(1.12)}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+  .slot.placed-pop{animation:slotpop .36s cubic-bezier(.2,.8,.3,1)}
+  @keyframes chipin{0%{transform:translateY(11px);opacity:0}100%{transform:translateY(0);opacity:1}}
+  .squad.fresh .chip{animation:chipin .3s cubic-bezier(.2,.7,.3,1) both}
+  @keyframes secin{0%{transform:translateY(9px);opacity:0}100%{transform:translateY(0);opacity:1}}
+  #finalLine .verdict,#finalLine .vsub,#finalLine .res-sec{animation:secin .44s cubic-bezier(.2,.7,.3,1) both}
+  /* ===== RESPONSIVENESS / PERFORMANCE ===== */
+  *{-webkit-tap-highlight-color:transparent}
+  .slot,.chip,.pill,.mini-btn,.roll-btn,.sim-btn,.ghost-btn,.toggle,.place-chip,.step,.trophy{touch-action:manipulation}
+  .roll-btn:active,.sim-btn:active,.mini-btn:active,.ghost-btn:active{transform:translateY(1px)}
+  .chip:active{transform:scale(.975)}
+  .place-chip:active{transform:scale(.95)}
+  .squad,.ticker{contain:layout style}
+  .reel{backface-visibility:hidden}
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+    html{scroll-behavior:auto!important}
+  }
+  @media (min-width:880px){
+    .wrap{max-width:1060px;display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+    .wrap>header,.wrap>.foot{grid-column:1/-1}
+    .panel{margin:0}
+  }
 </style>
 </head>
 <body>
@@ -219,6 +309,8 @@
 
   <div class="panel">
     <div class="tray" id="tray">
+      <div class="stage" id="stage"><div class="step" data-s="roll"><b>01</b>Roll</div><div class="step" data-s="build"><b>02</b>Build</div><div class="step" data-s="sim"><b>03</b>Simulate</div></div>
+      <div class="pipstrip" id="pips"></div>
       <div class="reel" id="reel"><div class="yr" id="reelYr">— — — —</div><div class="th" id="reelTh">Pull the lever</div></div>
       <button class="roll-btn" id="rollBtn"><span class="ico">⊙</span> Roll The Seasons</button>
       <div class="instruct" id="instruct">The reel spins through every Premier League season. Lock one, then draft from that squad.</div>
@@ -479,6 +571,8 @@ let formation="4-3-3",ratingMode="peak",showRatings=true,started=false;
 let board=[],draftedNames=new Set(),pending=null,currentSeason=null,busy=false;
 const R=p=>ratingMode==='peak'?p[2]:p[3];
 let captainName=null,captainMode=false;
+let mustPick=false,simSkipCap=false;
+let justPlaced=-1;
 const LEADERS={
  "Tony Adams":10,"Patrick Vieira":9,"Per Mertesacker":9,"Mikel Arteta":9,"Martin Ødegaard":9,
  "Martin Keown":8,"Sol Campbell":8,"Thierry Henry":8,"David Platt":8,"Cesc Fàbregas":8,"Thomas Vermaelen":8,
@@ -496,8 +590,57 @@ const capFactor=ldr=>Math.max(0,Math.min(1,(ldr-5)/5));
 const CAP_MAX=2.2;
 const leaderTier=fc=>fc>=.8?'Born Leader':fc>=.55?'Strong Leader':fc>=.25?'Decent Leader':'Not A Natural';
 
+/* ===== ALL-TIME GREATS (power ratings are estimates; rank vs these regardless of club) ===== */
+const ALLTIME=[
+ ["Barcelona","2010-11",97],["Manchester City","2017-18",97],["Manchester City","2018-19",96],
+ ["Arsenal","2003-04",96],["Liverpool","2019-20",96],["Manchester City","2022-23",96],
+ ["Real Madrid","2016-17",96],["Bayern Munich","2019-20",96],["Manchester City","2023-24",95],
+ ["Manchester United","1998-99",95],["Manchester United","2007-08",95],["AC Milan","1991-92",95],
+ ["Chelsea","2004-05",94],["Manchester United","1999-00",94],["Liverpool","2018-19",94],
+ ["Liverpool","1987-88",93],["Chelsea","2016-17",92],["Manchester United","1993-94",92],
+ ["Arsenal","1997-98",91],["Tottenham","1960-61",90],["Nottingham Forest","1977-78",89],
+ ["Blackburn Rovers","1994-95",88],["Leicester City","2015-16",87]
+];
+const OPP=["Manchester City","Liverpool","Manchester United","Chelsea","Tottenham","Newcastle","Aston Villa",
+ "Brighton","West Ham","Crystal Palace","Brentford","Fulham","Everton","Wolves","Nottm Forest","Bournemouth",
+ "Leicester","Burnley","Sheffield Utd","Leeds","Southampton","Ipswich"];
+
+/* ===== SIM MATH (tuned via Monte-Carlo) ===== */
+function matchProbs(r){
+  const Rmid=85,sp=5.5,hi=.915,lo=.05;
+  let pWin=1/(1+Math.exp(-(r-Rmid)/sp));pWin=Math.max(lo,Math.min(hi,pWin));
+  const ls=Math.max(.08,Math.min(.7,.55-(r-80)*.03));
+  const nw=1-pWin,pLoss=nw*ls,pDraw=nw-pLoss;
+  return {pWin,pDraw,pLoss};
+}
+const expectedPts=r=>{const {pWin,pDraw}=matchProbs(r);return Math.round(38*(3*pWin+pDraw));};
+function predictedFinish(pts){
+  if(pts>=102)return"Record-Breaking Pace";if(pts>=92)return"Champions";
+  if(pts>=82)return"Title Challengers";if(pts>=72)return"Top Four";
+  if(pts>=62)return"Europa Nights";if(pts>=50)return"Mid-Table";return"Relegation Scrap";
+}
+function pois(l){let L=Math.exp(-l),k=0,p=1;do{k++;p*=Math.random();}while(p>L);return k-1;}
+const GW={ST:10,CF:10,RW:6,LW:6,CAM:5,RM:4,LM:4,CM:3,CDM:1.2,RWB:1.5,LWB:1.5,RB:1,LB:1,CB:.6,GK:.05};
+const AW={CAM:8,RW:7,LW:7,RM:7,LM:7,CM:5,ST:4,CF:4,CDM:2,RWB:3,LWB:3,RB:2.5,LB:2.5,CB:.8,GK:.2};
+const DEF=["GK","CB","RB","LB","RWB","LWB"];
+const wpick=w=>{let t=w.reduce((a,b)=>a+b,0),x=Math.random()*t;for(let i=0;i<w.length;i++){if((x-=w[i])<=0)return i;}return w.length-1;};
+function cupRun(r,names,base,slope,mid,lo,hi){
+  const p=Math.max(lo,Math.min(hi,base+(r-mid)*slope));
+  for(let i=0;i<names.length;i++){if(Math.random()>=p)return {won:false,out:names[i]};}
+  return {won:true,out:null};
+}
+
 const pitch=document.getElementById('pitch'),reel=document.getElementById('reel'),reelYr=document.getElementById('reelYr'),reelTh=document.getElementById('reelTh');
+const RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+let slotEls=[],chipEls=[];
+pitch.addEventListener('click',e=>{const sl=e.target.closest('.slot');if(sl&&sl.dataset.i!=='')slotClick(+sl.dataset.i);});
+squadEl.addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c||c.classList.contains('used')||c.classList.contains('nofit'))return;const p=currentSeason&&currentSeason.pl[+c.dataset.i];if(p)selectPlayer(p);});
 const rollBtn=document.getElementById('rollBtn'),squadEl=document.getElementById('squad'),instruct=document.getElementById('instruct'),tray=document.getElementById('tray'),ticker=document.getElementById('ticker'),placeRow=document.getElementById('placeRow');
+const stageEl=document.getElementById('stage'),pipsEl=document.getElementById('pips');
+function jump(el,block,delay){if(!el)return;const go=()=>{try{const r=el.getBoundingClientRect(),vh=window.innerHeight||document.documentElement.clientHeight;if(r.top>=0&&r.bottom<=vh)return;el.scrollIntoView({behavior:RM?'auto':'smooth',block:block||'center'});}catch(e){}};setTimeout(go,delay==null?70:delay);}
+function setStage(n){if(!stageEl)return;const order=['roll','build','sim'],ai=order.indexOf(n);[...stageEl.children].forEach(st=>{const i=order.indexOf(st.dataset.s);st.classList.toggle('on',i===ai);st.classList.toggle('done',i<ai);});}
+function renderPips(){if(!pipsEl)return;const n=board.filter(s=>s.player).length;if(pipsEl.children.length!==11){pipsEl.innerHTML='';for(let i=0;i<11;i++){const d=document.createElement('div');d.className='pip';pipsEl.appendChild(d);}}[...pipsEl.children].forEach((p,i)=>{const was=p.classList.contains('filled');p.classList.toggle('filled',i<n);if(i<n&&!was){p.classList.add('pop');setTimeout(()=>p.classList.remove('pop'),220);}});}
+function easeCount(el,to,dur){if(!el)return;const start=performance.now();(function tick(now){let t=Math.min(1,(now-start)/dur);t=1-Math.pow(1-t,3);el.textContent=Math.round(to*t);if(t<1)requestAnimationFrame(tick);else el.textContent=to;})(performance.now());}
 
 /* ===== LEADERBOARD STORAGE ===== */
 const LB_KEY='gunners380_lb_v1';let memLB=null;
@@ -513,24 +656,34 @@ function buildBoard(keep){
     if(slot){slot.player=p.player;slot.season=p.season;draftedNames.add(p.player[0]);}});
   if(!board.some(s=>s.player&&s.player[0]===captainName))captainName=null;
   pending=null;
+  buildPitch();
 }
+function slotHTML(s){
+  if(s.player){const short=s.player[0].split(' ').slice(-1)[0];
+    const tag=showRatings?`<span class="rt">${s.abbr}</span>`:'';
+    const cap=captainName===s.player[0]?'<span class="cap">C</span>':'';
+    return `${cap}<div class="disc">${showRatings?R(s.player):s.abbr}</div><div class="nm">${short}</div>${tag}`;}
+  return `<div class="disc">${s.abbr}</div>`;
+}
+function buildPitch(){
+  slotEls.forEach(e=>e.remove());slotEls=[];
+  board.forEach((s,i)=>{const el=document.createElement('div');el.className='slot empty';el.dataset.i=i;el._html='';pitch.appendChild(el);slotEls.push(el);});
+}
+function popSlot(el){if(RM||!el.animate)return;try{el.animate([{transform:'translate(-50%,-50%) scale(.5)',opacity:0},{transform:'translate(-50%,-50%) scale(1.12)',opacity:1,offset:.6},{transform:'translate(-50%,-50%) scale(1)',opacity:1}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});}catch(e){}}
 function renderPitch(){
-  document.querySelectorAll('.slot').forEach(s=>s.remove());
+  if(slotEls.length!==board.length)buildPitch();
   pitch.classList.toggle('capmode',captainMode);
-  board.forEach((s,i)=>{
-    const el=document.createElement('div');
+  board.forEach((s,i)=>{const el=slotEls[i];
     const valid=pending&&!s.player&&s.accept.some(a=>pending.player[1].includes(a));
     el.className='slot '+(s.player?'filled':'empty')+(valid?' valid':'');
     el.style.left=s.x+'%';el.style.top=s.y+'%';
-    if(s.player){const short=s.player[0].split(' ').slice(-1)[0];
-      const tag=showRatings?`<span class="rt">${s.abbr}</span>`:'';
-      const cap=captainName===s.player[0]?'<span class="cap">C</span>':'';
-      el.innerHTML=`${cap}<div class="disc">${showRatings?R(s.player):s.abbr}</div><div class="nm">${short}</div>${tag}`;
-    }else{el.innerHTML=`<div class="disc">${s.abbr}</div>`;}
-    el.addEventListener('click',()=>slotClick(i));pitch.appendChild(el);
+    const h=slotHTML(s);if(el._html!==h){el.innerHTML=h;el._html=h;}
+    if(i===justPlaced&&s.player)popSlot(el);
   });
+  justPlaced=-1;
 }
 function updateRating(){
+  renderPips();
   const ratingEl=document.getElementById('rating'),chemEl=document.getElementById('chem');
   const filled=board.filter(s=>s.player);
   if(!filled.length){ratingEl.textContent=showRatings?'—':'··';chemEl.innerHTML='Roll a season to start drafting your XI.';return null;}
@@ -551,78 +704,95 @@ function updateRating(){
 }
 function renderSquad(){
   if(!currentSeason){squadEl.classList.add('hidden');return;}
-  squadEl.classList.remove('hidden');squadEl.innerHTML='';
-  currentSeason.pl.forEach(p=>{
+  squadEl.classList.remove('hidden');squadEl.innerHTML='';chipEls=[];
+  const fresh=squadEl.classList.contains('fresh');
+  currentSeason.pl.forEach((p,i)=>{
     const used=draftedNames.has(p[0]),sel=pending&&pending.player[0]===p[0];
     const placeable=board.some(s=>!s.player&&s.accept.some(a=>p[1].includes(a)));
-    const disabled=used||!placeable;
-    const c=document.createElement('div');
+    const c=document.createElement('div');c.dataset.i=i;
     c.className='chip'+(used?' used':'')+(!used&&!placeable?' nofit':'')+(sel?' sel':'');
+    if(fresh)c.style.animationDelay=(i*0.028)+'s';
     const rt=showRatings?`<div class="crt">${R(p)}</div>`:'';
     c.innerHTML=`<div class="l"><div class="cnm">${p[0]}</div><div class="cpos">${p[1].join(' · ')}</div></div>${rt}`;
-    if(!disabled)c.addEventListener('click',()=>selectPlayer(p));
-    squadEl.appendChild(c);
+    squadEl.appendChild(c);chipEls.push(c);
   });
 }
 
 /* ===== ROLL ===== */
 rollBtn.addEventListener('click',rollSeasons);
 function rollSeasons(){
-  if(busy)return;busy=true;pending=null;placeRow.classList.add('hidden');
-  rollBtn.disabled=true;rollBtn.classList.add('spinning');reel.classList.add('spin');reel.classList.remove('locked');
-  const final=SEASONS[Math.floor(Math.random()*SEASONS.length)];let t=0,delay=26;const total=15;
+  if(busy||mustPick)return;if(board.every(s=>s.player))return;busy=true;pending=null;placeRow.classList.add('hidden');squadEl.classList.add('hidden');
+  rollBtn.disabled=true;rollBtn.classList.add('spinning');reel.classList.add('spin');reel.classList.remove('locked');reelYr.style.willChange='transform,opacity';
+  const final=SEASONS[Math.floor(Math.random()*SEASONS.length)];let t=0;const total=RM?4:22;
   (function step(){const s=(t===total-1)?final:SEASONS[Math.floor(Math.random()*SEASONS.length)];
-    reelYr.textContent=s.yr;reelTh.textContent=s.th;t++;
-    if(t<total){delay=Math.min(110,delay*1.16);setTimeout(step,delay);}
-    else{reel.classList.remove('spin');reel.classList.add('locked');
-      rollBtn.classList.remove('spinning');rollBtn.disabled=false;rollBtn.innerHTML='<span class="ico">⊙</span> Roll Again';
-      currentSeason=final;busy=false;renderSquad();renderPitch();
-      instruct.innerHTML=`<b>${final.yr}</b> squad is out — tap a player, then a glowing spot.`;}
+    reelYr.textContent=s.yr;reelTh.textContent=s.th;
+    if(!RM&&reelYr.animate)reelYr.animate([{transform:'translateY(10px)',opacity:.15},{transform:'translateY(0)',opacity:1}],{duration:110,easing:'ease-out'});
+    if(!RM)reel.style.filter='blur('+(0.6*(1-t/(total-1))).toFixed(2)+'px)';t++;
+    if(t<total){setTimeout(step,20+420*Math.pow(t/total,3));}
+    else{reel.classList.remove('spin','tick');reel.style.filter='';reelYr.style.willChange='';reel.classList.add('locked','landed');setTimeout(()=>reel.classList.remove('landed'),400);
+      rollBtn.classList.remove('spinning');busy=false;currentSeason=final;
+      const fits=final.pl.some(p=>!draftedNames.has(p[0])&&board.some(s=>!s.player&&s.accept.some(a=>p[1].includes(a))));
+      if(!fits){mustPick=false;rollBtn.disabled=false;currentSeason=null;squadEl.classList.add('hidden');renderPitch();
+        instruct.innerHTML=`No one from <b>${final.yr}</b> fits an open slot — that roll's on the house. Roll again.`;setStage('roll');}
+      else{mustPick=true;rollBtn.disabled=true;squadEl.classList.add('fresh');renderSquad();renderPitch();
+        instruct.innerHTML=`<b>${final.yr}</b> is out — you must draft <b>one</b> player from this squad. Tap a player, then a glowing spot.`;setStage('build');jump(squadEl,'center');}}
   })();
 }
 
 /* ===== DRAFT ===== */
 function selectPlayer(p){
   if(draftedNames.has(p[0]))return;
+  squadEl.classList.remove('fresh');
   if(board.every(s=>s.player)){instruct.innerHTML='XI is full — reset or simulate below.';return;}
   pending={player:p,season:currentSeason.yr};
-  renderSquad();renderPitch();
+  chipEls.forEach(c=>c.classList.toggle('sel',currentSeason.pl[+c.dataset.i][0]===p[0]));renderPitch();
   const abbrs=[...new Set(board.filter(s=>!s.player&&s.accept.some(a=>p[1].includes(a))).map(s=>s.abbr))];
   placeRow.innerHTML='';
   if(abbrs.length){
     instruct.innerHTML=`Where should <b>${p[0]}</b> play?`;
     abbrs.forEach(ab=>{const b=document.createElement('div');b.className='place-chip';
       b.innerHTML=`<span class="pp">PLACE AT</span>${ab}`;b.addEventListener('click',()=>placeAt(ab));placeRow.appendChild(b);});
-    placeRow.classList.remove('hidden');
+    placeRow.classList.remove('hidden');jump(document.getElementById('pitch'),'center');
   }else{
     placeRow.classList.add('hidden');
     instruct.innerHTML=`No open <b>${p[1].join('/')}</b> slot in ${formation}. Pick another player or change formation.`;
   }
 }
+function afterPick(placed){
+  pending=null;mustPick=false;currentSeason=null;simSkipCap=false;
+  placeRow.classList.add('hidden');squadEl.classList.add('hidden');
+  renderPitch();renderSquad();updateRating();renderPills();
+  const full=board.every(b=>b.player);
+  rollBtn.classList.toggle('hidden',full);rollBtn.disabled=full;
+  if(full){reel.classList.remove('locked');reelYr.textContent='XI SET';reelTh.textContent='Captain, then simulate';
+    instruct.innerHTML='Your XI is complete. Pick a captain, then simulate the season below.';}
+  else{reelYr.textContent='— — — —';reelTh.textContent='Roll your next pick';rollBtn.innerHTML='<span class="ico">⊙</span> Roll Again';
+    instruct.innerHTML=`<b>${placed}</b> is in — <b>${board.filter(b=>b.player).length}/11</b> drafted. Roll for your next pick.`;}
+  refreshSimBtn();
+  if(full){setStage('sim');jump(document.getElementById('predict')||document.getElementById('simBtn'),'center');}
+  else{setStage('roll');jump(reel,'center',430);}
+}
 function placeAt(ab){
   if(!pending)return;
   const slot=board.find(s=>!s.player&&s.abbr===ab&&s.accept.some(a=>pending.player[1].includes(a)));
   if(!slot)return;
-  slot.player=pending.player;slot.season=pending.season;draftedNames.add(pending.player[0]);
-  const placed=pending.player[0];pending=null;placeRow.classList.add('hidden');
-  renderPitch();renderSquad();updateRating();renderPills();
-  instruct.innerHTML=board.every(b=>b.player)?'Your all-time XI is set. Chase the impossible below.':`<b>${placed}</b> is in. Keep drafting or roll again.`;
-  refreshSimBtn();
+  slot.player=pending.player;slot.season=pending.season;draftedNames.add(pending.player[0]);justPlaced=board.indexOf(slot);
+  afterPick(pending.player[0]);
 }
 function slotClick(i){
   const s=board[i];
   if(captainMode){
     if(s.player)captainName=(captainName===s.player[0])?null:s.player[0];
-    setCaptainMode(false);updateRating();return;
+    setCaptainMode(false);updateRating();refreshSimBtn();jump(document.getElementById('simBtn'),'center');return;
   }
-  if(s.player){if(captainName===s.player[0])captainName=null;draftedNames.delete(s.player[0]);s.player=null;s.season=null;pending=null;placeRow.classList.add('hidden');
+  if(s.player){if(captainName===s.player[0])captainName=null;draftedNames.delete(s.player[0]);s.player=null;s.season=null;pending=null;mustPick=false;simSkipCap=false;currentSeason=null;
+    placeRow.classList.add('hidden');squadEl.classList.add('hidden');
+    rollBtn.classList.remove('hidden');rollBtn.disabled=false;rollBtn.innerHTML='<span class="ico">⊙</span> Roll Again';reel.classList.remove('locked');reelYr.textContent='— — — —';reelTh.textContent='Roll to fill the gap';
     renderPitch();renderSquad();updateRating();refreshSimBtn();renderPills();
-    instruct.innerHTML='Spot cleared. Tap a player to fill it, or roll a new season.';return;}
+    instruct.innerHTML='Spot cleared — roll a season to fill it.';setStage('roll');jump(reel,'center');return;}
   if(pending&&s.accept.some(a=>pending.player[1].includes(a))){
-    s.player=pending.player;s.season=pending.season;draftedNames.add(pending.player[0]);
-    const placed=pending.player[0];pending=null;placeRow.classList.add('hidden');renderPitch();renderSquad();updateRating();renderPills();
-    instruct.innerHTML=board.every(b=>b.player)?'Your all-time XI is set. Chase the impossible below.':`<b>${placed}</b> is in. Keep drafting or roll again.`;
-    refreshSimBtn();
+    s.player=pending.player;s.season=pending.season;draftedNames.add(pending.player[0]);justPlaced=i;
+    afterPick(pending.player[0]);
   }
 }
 
@@ -636,10 +806,12 @@ function renderPills(){
       if(n===formation)return;formation=n;buildBoard(true);renderPills();renderPitch();renderSquad();updateRating();refreshSimBtn();updateCapBtn();
       instruct.innerHTML=`Formation set to <b>${n}</b>. Roll a season to begin.`;});fp.appendChild(b);});
   const mp=document.getElementById('modePills');mp.innerHTML='';
-  [["peak","★ Peak"],["season","◷ Season"]].forEach(m=>{const b=document.createElement('div');b.className='pill'+(m[0]===ratingMode?' on':'');b.textContent=m[1];
-    b.addEventListener('click',()=>{if(m[0]===ratingMode)return;ratingMode=m[0];renderPills();renderPitch();renderSquad();updateRating();});mp.appendChild(b);});
+  [["peak","★ Peak"],["season","◷ Season"]].forEach(m=>{const b=document.createElement('div');b.className='pill'+(m[0]===ratingMode?' on':'')+(fLocked&&m[0]!==ratingMode?' locked':'');b.textContent=m[1];
+    b.addEventListener('click',()=>{if(fLocked){instruct.innerHTML='Rating basis locks once you start drafting — hit <b>↺ Reset</b> to change it.';return;}if(m[0]===ratingMode)return;ratingMode=m[0];renderPills();renderPitch();renderSquad();updateRating();});mp.appendChild(b);});
+  document.getElementById('ratingToggle').classList.toggle('locked',fLocked);
 }
 document.getElementById('ratingToggle').addEventListener('click',function(){
+  if(board.some(s=>s.player)){instruct.innerHTML='Ratings visibility locks once you start drafting — hit <b>↺ Reset</b> to change it.';return;}
   showRatings=!showRatings;this.classList.toggle('on',showRatings);
   this.querySelector('span:last-child').textContent=showRatings?'Show Ratings':'Hidden Ratings';
   renderPitch();renderSquad();updateRating();});
@@ -660,20 +832,34 @@ function updateCapBtn(){
   capBtn.innerHTML=cap?'🅒 '+cap.player[0].split(' ').slice(-1)[0].toUpperCase():'🅒 Captain';
 }
 function resetAll(){
-  buildBoard(false);currentSeason=null;pending=null;placeRow.classList.add('hidden');captainName=null;captainMode=false;
+  buildBoard(false);currentSeason=null;pending=null;mustPick=false;simSkipCap=false;placeRow.classList.add('hidden');captainName=null;captainMode=false;
   if(typeof updateCapBtn==='function')updateCapBtn();document.getElementById('capBtn').classList.remove('on');
   ticker.classList.add('hidden');ticker.innerHTML='';tray.classList.remove('hidden');
   document.getElementById('confetti').classList.add('hidden');
-  reelYr.textContent='— — — —';reelTh.textContent='Pull the lever';rollBtn.innerHTML='<span class="ico">⊙</span> Roll The Seasons';
+  reelYr.textContent='— — — —';reelTh.textContent='Pull the lever';rollBtn.innerHTML='<span class="ico">⊙</span> Roll The Seasons';rollBtn.classList.remove('hidden');rollBtn.disabled=false;
   squadEl.classList.add('hidden');
   instruct.innerHTML='The reel spins through every Premier League season. Lock one, then draft from that squad.';
-  renderPitch();updateRating();refreshSimBtn();renderPills();
+  renderPitch();updateRating();refreshSimBtn();renderPills();setStage('roll');
 }
 function refreshSimBtn(){
-  const ex=document.getElementById('simBtn');
-  if(board.every(s=>s.player)){if(!ex){const b=document.createElement('button');b.className='sim-btn';b.id='simBtn';
-    b.textContent='▶ Simulate The Season';b.addEventListener('click',simulate);instruct.insertAdjacentElement('afterend',b);}}
-  else if(ex)ex.remove();
+  ['simBtn','predict','skipCap'].forEach(id=>{const e=document.getElementById(id);if(e)e.remove();});
+  if(!board.every(s=>s.player))return;
+  const info=updateRating(),total=info?info.total:0;
+  const predPts=expectedPts(total),label=predictedFinish(predPts);
+  const pb=document.createElement('div');pb.className='predict';pb.id='predict';
+  pb.innerHTML=`<div class="pk">Squad Rating ${showRatings?total.toFixed(1):'··'} · Prediction</div>`+
+    `<div class="pf">${label}</div>`+
+    `<div class="pp">Projected <b>${showRatings?predPts+' pts':'—'}</b> across 38 games. Now go and beat it.</div>`;
+  instruct.insertAdjacentElement('afterend',pb);
+  if(!captainName&&!simSkipCap){
+    const cg=document.createElement('button');cg.className='sim-btn';cg.id='simBtn';cg.textContent='🅒 Choose Your Captain';
+    cg.addEventListener('click',()=>setCaptainMode(true));pb.insertAdjacentElement('afterend',cg);
+    const sk=document.createElement('button');sk.className='ghost-btn';sk.id='skipCap';sk.style.marginTop='7px';sk.textContent='Simulate without a captain';
+    sk.addEventListener('click',()=>{simSkipCap=true;refreshSimBtn();});cg.insertAdjacentElement('afterend',sk);
+  }else{
+    const b=document.createElement('button');b.className='sim-btn';b.id='simBtn';b.textContent='▶ Simulate The Season';
+    b.addEventListener('click',simulate);pb.insertAdjacentElement('afterend',b);
+  }
 }
 
 /* ===== START + LEADERBOARD OVERLAYS ===== */
@@ -694,42 +880,115 @@ function openLB(){
   document.getElementById('lbOv').classList.remove('hidden');
 }
 
-/* ===== SIM ===== */
+/* ===== SIM ENGINE ===== */
+function posColor(p){if(p==='GK')return'#B8862A';if(['CB','RB','LB','RWB','LWB'].includes(p))return'#2f6fb0';if(['ST','CF','RW','LW'].includes(p))return'#c0392b';return'#1f7a3a';}
 function simulate(){
   const info=updateRating(),rating=info.total;
-  let drop=Math.min(.6,Math.max(.004,(92.5-rating)/120+.02));
-  const res=[];let w=0;for(let i=0;i<38;i++){if(Math.random()<drop)res.push(Math.random()<.62?'d':'l');else{res.push('w');w++;}}
-  const d=res.filter(x=>x==='d').length,l=res.filter(x=>x==='l').length,perfect=(w===38);
-  tray.classList.add('hidden');ticker.classList.remove('hidden');
+  const {pWin,pDraw}=matchProbs(rating);
+  const xi=board.filter(s=>s.player).map(s=>({pos:s.player[1][0],name:s.player[0],r:R(s.player),g:0,a:0,cs:0}));
+  const gw=xi.map(p=>(GW[p.pos]||1)*Math.pow(p.r/85,2));
+  const aw=xi.map(p=>(AW[p.pos]||1)*Math.pow(p.r/85,1.5));
+  const la=Math.max(.4,Math.min(2.4,(rating-78)/9)), ld=Math.max(.45,Math.min(1.7,(99-rating)/11));
+  const res=[],lines=[];let w=0,d=0,l=0,teamGF=0,teamGA=0,cs=0,streak=0,best=0;
+  let big={m:-99,gf:0,ga:0,opp:''},hiSc={t:-1,gf:0,ga:0,opp:''};
+  for(let i=0;i<38;i++){
+    const x=Math.random();const r=x<pWin?'w':x<pWin+pDraw?'d':'l';res.push(r);
+    let gf,ga;
+    if(r==='w'){gf=1+pois(la);ga=Math.max(0,Math.min(gf-1,pois(ld*.95)));w++;}
+    else if(r==='d'){gf=pois(.9);ga=gf;d++;}
+    else{ga=1+pois(ld);gf=Math.max(0,Math.min(ga-1,pois(la*.5)));l++;}
+    teamGF+=gf;teamGA+=ga;
+    for(let k=0;k<gf;k++){const sc=wpick(gw);xi[sc].g++;
+      if(Math.random()<.78){let as,t=0;do{as=wpick(aw);t++;}while(as===sc&&t<6);if(as!==sc)xi[as].a++;}}
+    if(ga===0){xi.forEach(p=>{if(DEF.includes(p.pos))p.cs++;});cs++;}
+    if(r==='w'){streak++;if(streak>best)best=streak;}else streak=0;
+    const opp=OPP[Math.floor(Math.random()*OPP.length)];lines.push({r,gf,ga,opp});
+    const m=gf-ga;if(m>big.m||(m===big.m&&gf>big.gf))big={m,gf,ga,opp};
+    if(gf+ga>hiSc.t)hiSc={t:gf+ga,gf,ga,opp};
+  }
+  const pts=w*3+d, perfect=(w===38);
+  const league=perfect||pts>=86?'Champions':pts>=78?'Runners-Up':pts>=72?'Top Four':pts>=62?'Europa':pts>=50?'Mid-Table':'Lower Half';
+  const fa=cupRun(rating,['Third Round','Fourth Round','Fifth Round','Quarter-Final','Semi-Final','Final'],.5,.03,84,.18,.9);
+  const cl=cupRun(rating,['Round of 16','Quarter-Final','Semi-Final','Final'],.5,.03,87,.2,.85);
+  const trophies={league:league==='Champions',fa:fa.won,cl:cl.won};
+  tray.classList.add('hidden');ticker.classList.remove('hidden');setStage('sim');jump(ticker,'start');
   ticker.innerHTML=`<div class="big" id="bigScore">0</div><div class="biglbl">POINTS</div>
     <div class="record"><div class="rec w"><b id="rW">0</b>WON</div><div class="rec d"><b id="rD">0</b>DREW</div><div class="rec l"><b id="rL">0</b>LOST</div></div>
     <div class="games" id="games"></div><div id="finalLine"></div>`;
-  const gamesEl=document.getElementById('games'),bigScore=document.getElementById('bigScore');let cw=0,cd=0,cl=0,pts=0;
-  res.forEach((r,i)=>setTimeout(()=>{const g=document.createElement('div');g.className='g '+r;gamesEl.appendChild(g);
-    if(r==='w'){cw++;pts+=3;}else if(r==='d'){cd++;pts+=1;}else cl++;
-    document.getElementById('rW').textContent=cw;document.getElementById('rD').textContent=cd;document.getElementById('rL').textContent=cl;bigScore.textContent=pts;
-    if(i===res.length-1)setTimeout(()=>finalLine(perfect,w,d,l,pts),260);},i*55));
+  const gamesEl=document.getElementById('games'),bigScore=document.getElementById('bigScore');let cw=0,cd=0,cll=0,p=0;
+  res.forEach((rr,i)=>setTimeout(()=>{const g=document.createElement('div');g.className='g '+rr;gamesEl.appendChild(g);
+    if(rr==='w'){cw++;p+=3;}else if(rr==='d'){cd++;p+=1;}else cll++;
+    document.getElementById('rW').textContent=cw;document.getElementById('rD').textContent=cd;document.getElementById('rL').textContent=cll;bigScore.textContent=p;
+    if(i===res.length-1)setTimeout(()=>showResults({perfect,w,d,l,pts,rating,xi,cs,best,big,hiSc,lines,trophies,fa,cl,league}),320);
+  },Math.round(38*i+0.65*i*i)));
 }
-function finalLine(perfect,w,d,l,pts){
-  const el=document.getElementById('finalLine');let v,s;
-  if(perfect){v='38–0. PERFECT.';s='Played 38, won 38. Beyond Invincible. The Emirates erupts.';party();}
-  else if(l===0){v='UNBEATEN — NOT PERFECT';s=`${w}W ${d}D ${l}L · ${pts} pts. The Invincibles would nod. The 38-0 dream lives on.`;}
-  else if(w>=32){v='TITLE WINNERS';s=`${w}W ${d}D ${l}L · ${pts} pts. Champions — but ${l} slip-up${l>1?'s':''} ended the perfect run.`;}
-  else if(w>=26){v='TOP FOUR FORM';s=`${w}W ${d}D ${l}L · ${pts} pts. Strong. Rebuild a sharper, tighter-era XI and roll again.`;}
-  else{v='MID-TABLE';s=`${w}W ${d}D ${l}L · ${pts} pts. The cannon misfired. Try a higher-rated, single-season core.`;}
-  const best=loadLB()[0];const beatBest=!best||pts>best.pts;
-  el.innerHTML=`<div class="verdict ${perfect?'win':''}">${v}</div><div class="vsub">${s}${beatBest?' <b>New best score!</b>':''}</div>
-    <div class="saverow"><input id="initials" maxlength="14" placeholder="Your name"><button class="ghost-btn" id="saveBtn">Save</button></div>
-    <button class="ghost-btn" id="viewLb" style="margin-top:7px;font-size:11px">🏆 View Leaderboard</button>`;
+function showResults(o){
+  const el=document.getElementById('finalLine');
+  const predPts=expectedPts(o.rating),diff=o.pts-predPts,pl=predictedFinish(predPts);
+  const treble=o.trophies.league&&o.trophies.fa&&o.trophies.cl;
+  let v,sub;
+  if(o.perfect){v='38–0. INVINCIBLE+';sub='Played 38, won 38. The greatest season ever simulated — nothing left to conquer.';}
+  else if(o.l===0){v='UNBEATEN';sub=`${o.w}W ${o.d}D 0L · ${o.pts} pts. Not perfect — but they never lost. The Invincibles nod.`;}
+  else{v=o.league.toUpperCase();sub=`${o.w}W ${o.d}D ${o.l}L · ${o.pts} pts.`;}
+  const tag=diff>=6?` Overperformed the <b>${pl}</b> call by ${diff} pts.`:diff<=-6?` Fell ${-diff} pts shy of the <b>${pl}</b> call.`:` Right on the <b>${pl}</b> prediction.`;
+  const byG=[...o.xi].sort((a,b)=>b.g-a.g)[0];
+  const byA=[...o.xi].sort((a,b)=>b.a-a.a)[0];
+  const gk=o.xi.find(p=>p.pos==='GK')||[...o.xi].sort((a,b)=>b.cs-a.cs)[0];
+  const pots=[...o.xi].sort((a,b)=>(b.g*4+b.a*3+b.cs*1.5)-(a.g*4+a.a*3+a.cs*1.5))[0];
+  const cab=`<div class="cab">`+
+    `<div class="trophy ${o.trophies.league?'won':''}"><div class="ti">🏆</div><div class="tl">League</div></div>`+
+    `<div class="trophy ${o.trophies.fa?'won':''}"><div class="ti">🏆</div><div class="tl">FA Cup</div></div>`+
+    `<div class="trophy ${o.trophies.cl?'won':''}"><div class="ti">🏆</div><div class="tl">Champions Lg</div></div>`+
+    `</div>${treble?'<div class="treble-ban">★ THE TREBLE ★</div>':''}`;
+  const cupNote=`${o.trophies.league?'League champions. ':'Pipped to the title. '}${o.trophies.fa?'FA Cup won. ':'FA Cup exit: '+o.fa.out+'. '}${o.trophies.cl?'Champions League WON.':'CL exit: '+o.cl.out+'.'}`;
+  const awards=`<div class="awards">`+
+    `<div class="award"><div class="ak">⚽ Golden Boot</div><div class="an">${byG.name}</div><div class="as">${byG.g} goals</div></div>`+
+    `<div class="award"><div class="ak">🎯 Playmaker</div><div class="an">${byA.name}</div><div class="as">${byA.a} assists</div></div>`+
+    `<div class="award"><div class="ak">🧤 Golden Glove</div><div class="an">${gk.name}</div><div class="as">${gk.cs} clean sheets</div></div>`+
+    `<div class="award star"><div class="ak">🏆 Player of the Season</div><div class="an">${pots.name}</div><div class="as">${pots.g}G · ${pots.a}A${pots.cs?' · '+pots.cs+'CS':''}</div></div>`+
+    `</div>`;
+  const rows=[...o.xi].sort((a,b)=>(b.g+b.a)-(a.g+a.a)||b.cs-a.cs).map(p=>
+    `<div class="ptr"><span class="pp2" style="background:${posColor(p.pos)}">${p.pos}</span>`+
+    `<span class="pn">${p.name}</span>`+
+    `<span class="pc g">${p.g||'·'}</span><span class="pc a">${p.a||'·'}</span><span class="pc c">${p.cs||'·'}</span></div>`).join('');
+  const ptab=`<div class="ptab"><div class="ptr head"><span class="pp2" style="background:transparent;color:#c7a98f">POS</span><span class="pn">Player</span><span class="pc">G</span><span class="pc">A</span><span class="pc">CS</span></div>${rows}</div>`;
+  const statcards=`<div class="statcards">`+
+    `<div class="statcard"><div class="sn">${o.cs}</div><div class="sl">Clean Sheets</div></div>`+
+    `<div class="statcard"><div class="sn win">${o.best}</div><div class="sl">Longest Win Streak</div></div>`+
+    `<div class="statcard"><div class="sn sm win">${o.big.gf}–${o.big.ga}</div><div class="sl">Biggest Win · ${o.big.opp}</div></div>`+
+    `<div class="statcard"><div class="sn sm">${o.hiSc.gf}–${o.hiSc.ga}</div><div class="sl">Highest-Scoring · ${o.hiSc.opp}</div></div>`+
+    `</div>`;
+  const feed=[...o.lines].map((x,i)=>Object.assign({i},x)).sort((a,b)=>(b.gf+b.ga)-(a.gf+a.ga)).slice(0,6).map(x=>
+    `<div class="frow ${x.r==='w'&&x.gf-x.ga>=3?'big':''}"><span class="fsc">${x.gf}–${x.ga}</span>`+
+    `<span class="fop">${x.r==='w'?'beat':x.r==='d'?'drew':'lost to'} <b>${x.opp}</b></span></div>`).join('');
+  const all=ALLTIME.map(a=>({tm:a[0],yr:a[1],rt:a[2],you:false})).concat([{tm:'YOUR XI',yr:'this sim',rt:o.rating,you:true}]).sort((a,b)=>b.rt-a.rt);
+  const myRank=all.findIndex(a=>a.you)+1;
+  const atRows=all.map((a,i)=>`<div class="atr ${a.you?'you':''}"><span class="arnk">${i+1}</span>`+
+    `<span class="atm"><b>${a.tm}</b> <span class="ayr">${a.yr}</span></span><span class="art">${a.you?a.rt.toFixed(1):a.rt}</span></div>`).join('');
+  el.innerHTML=
+    `<div class="verdict ${o.perfect||treble?'win':''}">${v}</div><div class="vsub">${sub}${tag}</div>`+
+    `<div class="res-sec"><div class="res-h"><span>Trophy Cabinet</span></div>${cab}<div class="vsub" style="margin-top:8px">${cupNote}</div></div>`+
+    `<div class="res-sec"><div class="res-h"><span>Season Awards</span></div>${awards}</div>`+
+    `<div class="res-sec"><div class="res-h"><span>Squad · G / A / CS</span></div>${ptab}</div>`+
+    `<div class="res-sec"><div class="res-h"><span>Season Stats</span></div>${statcards}</div>`+
+    `<div class="res-sec"><div class="res-h"><span>Notable Results</span></div><div class="feed">${feed}</div></div>`+
+    `<div class="res-sec"><div class="res-h"><span>Greatest Teams Of All Time</span></div>`+
+      `<div class="vsub" style="margin:0 0 8px">Your XI ranks <b>#${myRank}</b> of all time by rating.</div><div class="atab">${atRows}</div></div>`+
+    `<div class="res-sec"><div class="saverow"><input id="initials" maxlength="14" placeholder="Your name"><button class="ghost-btn" id="saveBtn">Save</button></div>`+
+    `<button class="ghost-btn" id="viewLb" style="margin-top:7px;font-size:11px">🏆 View Leaderboard</button></div>`;
   document.getElementById('saveBtn').addEventListener('click',()=>{
     const nm=(document.getElementById('initials').value||'GOONER').trim().slice(0,14).toUpperCase();
-    const arr=loadLB();arr.push({name:nm,pts,w,d,l,mode:ratingMode,formation,perfect,cap:captainName,ts:Date.now()});
+    const arr=loadLB();arr.push({name:nm,pts:o.pts,w:o.w,d:o.d,l:o.l,mode:ratingMode,formation,perfect:o.perfect,cap:captainName,ts:Date.now()});
     arr.sort((a,b)=>b.pts-a.pts||b.w-a.w||a.ts-b.ts);persistLB(arr.slice(0,30));
     document.getElementById('saveBtn').textContent='Saved ✓';document.getElementById('saveBtn').disabled=true;
     document.getElementById('initials').disabled=true;openLB();});
   document.getElementById('viewLb').addEventListener('click',openLB);
   const a=document.createElement('button');a.className='ghost-btn';a.style.marginTop='7px';a.textContent='↺ Build A New XI';
   a.addEventListener('click',resetAll);el.appendChild(a);
+  jump(ticker,'start');
+  const sc=el.querySelectorAll('.statcard .sn:not(.sm)');if(sc[0])easeCount(sc[0],o.cs,700);if(sc[1])easeCount(sc[1],o.best,700);
+  el.querySelectorAll('.res-sec').forEach((sec,i)=>sec.style.animationDelay=(0.05+i*0.07)+'s');
+  if(o.perfect||treble)party();
 }
 function party(){const c=document.getElementById('confetti');c.classList.remove('hidden');c.innerHTML='';
   const cols=['#DB0007','#E0B23C','#fff','#5C0F1B'];
@@ -738,7 +997,7 @@ function party(){const c=document.getElementById('confetti');c.classList.remove(
   setTimeout(()=>c.classList.add('hidden'),6000);}
 
 /* init */
-buildBoard(false);renderPills();renderPitch();updateRating();
+buildBoard(false);renderPills();renderPitch();updateRating();setStage('roll');
 </script>
 </body>
 </html>
