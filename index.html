@@ -221,7 +221,7 @@
   .ptr .pp2{font-family:'Spline Sans Mono';font-weight:700;font-size:8px;width:34px;flex:none;text-align:center;border-radius:4px;padding:2px 0;color:#fff}
   .ptr .pn{flex:1;min-width:0;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .ptr .pc{width:30px;flex:none;text-align:right;font-family:'Big Shoulders Display';font-weight:900;font-size:15px}
-  .ptr .pc.g{color:#1f7a3a}.ptr .pc.a{color:#1668b0}.ptr .pc.c{color:#8a7358}
+  .ptr .pc.gl{color:#1f7a3a}.ptr .pc.a{color:#1668b0}.ptr .pc.c{color:#8a7358}
   .ptr.head .pc{font-family:'Spline Sans Mono';font-size:8.5px;font-weight:700}
   .statcards{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .statcard{border:2px solid var(--ink);border-radius:11px;background:var(--cream2);padding:11px;text-align:center}
@@ -232,7 +232,7 @@
   .frow{display:flex;align-items:center;gap:9px;border:2px solid var(--ink);border-radius:9px;background:var(--cream2);padding:7px 10px;font-size:12px}
   .frow .fsc{font-family:'Spline Sans Mono';font-weight:700;font-size:13px;flex:none;width:40px;text-align:center;color:var(--ink)}
   .frow .fop{flex:1;min-width:0;color:#6b5b50}.frow .fop b{color:var(--ink)}
-  .frow.big{background:linear-gradient(90deg,rgba(31,122,58,.16),var(--cream2))}
+  .frow.feat{background:linear-gradient(90deg,rgba(31,122,58,.16),var(--cream2))}
   .atab{border:2px solid var(--ink);border-radius:11px;overflow:hidden}
   .atr{display:flex;align-items:center;gap:9px;padding:7px 10px;border-bottom:1px solid rgba(35,23,18,.12);background:var(--cream2);font-size:12.5px}
   .atr:last-child{border-bottom:none}
@@ -625,6 +625,9 @@ function predictedFinish(pts){
   if(pts>=82)return"Title Challengers";if(pts>=72)return"Top Four";
   if(pts>=62)return"Europa Nights";if(pts>=50)return"Mid-Table";return"Relegation Scrap";
 }
+function ordinal(n){const sx=['th','st','nd','rd'],v=n%100;return n+(sx[(v-20)%10]||sx[v]||sx[0]);}
+const POS_PTS=[90,84,77,72,67,63,58,54,51,49,47,45,43,41,40,38,36,34,30,24];
+function predictedPosition(pts){for(let i=0;i<POS_PTS.length;i++){if(pts>=POS_PTS[i])return i+1;}return 20;}
 function pois(l){let L=Math.exp(-l),k=0,p=1;do{k++;p*=Math.random();}while(p>L);return k-1;}
 const GW={ST:10,CF:10,RW:6,LW:6,CAM:5,RM:4,LM:4,CM:3,CDM:1.2,RWB:1.5,LWB:1.5,RB:1,LB:1,CB:.6,GK:.05};
 const AW={CAM:8,RW:7,LW:7,RM:7,LM:7,CM:5,ST:4,CF:4,CDM:2,RWB:3,LWB:3,RB:2.5,LB:2.5,CB:.8,GK:.2};
@@ -643,7 +646,7 @@ const rollBtn=document.getElementById('rollBtn'),squadEl=document.getElementById
 const stageEl=document.getElementById('stage'),pipsEl=document.getElementById('pips');
 pitch.addEventListener('click',e=>{const sl=e.target.closest('.slot');if(sl&&sl.dataset.i!=='')slotClick(+sl.dataset.i);});
 squadEl.addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c||c.classList.contains('used')||c.classList.contains('nofit'))return;const p=currentSeason&&currentSeason.pl[+c.dataset.i];if(p)selectPlayer(p);});
-function jump(el,block,delay){if(!el)return;const go=()=>{try{const r=el.getBoundingClientRect(),vh=window.innerHeight||document.documentElement.clientHeight;if(r.top>=0&&r.bottom<=vh)return;el.scrollIntoView({behavior:RM?'auto':'smooth',block:block||'center'});}catch(e){}};setTimeout(go,delay==null?70:delay);}
+function jump(el,block,delay,force){if(!el)return;const go=()=>{try{if(!force){const r=el.getBoundingClientRect(),vh=window.innerHeight||document.documentElement.clientHeight;if(r.top>=0&&r.bottom<=vh)return;}el.scrollIntoView({behavior:RM?'auto':'smooth',block:block||'center'});}catch(e){}};setTimeout(go,delay==null?70:delay);}
 function setStage(n){if(!stageEl)return;const order=['roll','build','sim'],ai=order.indexOf(n);[...stageEl.children].forEach(st=>{const i=order.indexOf(st.dataset.s);st.classList.toggle('on',i===ai);st.classList.toggle('done',i<ai);});}
 function renderPips(){if(!pipsEl)return;const n=board.filter(s=>s.player).length;if(pipsEl.children.length!==11){pipsEl.innerHTML='';for(let i=0;i<11;i++){const d=document.createElement('div');d.className='pip';pipsEl.appendChild(d);}}[...pipsEl.children].forEach((p,i)=>{const was=p.classList.contains('filled');p.classList.toggle('filled',i<n);if(i<n&&!was){p.classList.add('pop');setTimeout(()=>p.classList.remove('pop'),220);}});}
 function easeCount(el,to,dur){if(!el)return;const start=performance.now();(function tick(now){let t=Math.min(1,(now-start)/dur);t=1-Math.pow(1-t,3);el.textContent=Math.round(to*t);if(t<1)requestAnimationFrame(tick);else el.textContent=to;})(performance.now());}
@@ -744,7 +747,7 @@ function rollSeasons(){
       if(!fits){mustPick=false;rollBtn.disabled=false;currentSeason=null;squadEl.classList.add('hidden');renderPitch();
         instruct.innerHTML=`No one from <b>${final.yr}</b> fits an open slot — that roll's on the house. Roll again.`;setStage('roll');}
       else{mustPick=true;rollBtn.disabled=true;squadEl.classList.add('fresh');renderSquad();renderPitch();
-        instruct.innerHTML=`<b>${final.yr}</b> is out — you must draft <b>one</b> player from this squad. Tap a player, then a glowing spot.`;setStage('build');jump(reel,'start');}}
+        instruct.innerHTML=`<b>${final.yr}</b> is out — you must draft <b>one</b> player from this squad. Tap a player, then a glowing spot.`;setStage('build');jump(reel,'start',120,(window.innerWidth||999)<880);}}
   })();
 }
 
@@ -792,7 +795,7 @@ function slotClick(i){
   const s=board[i];
   if(captainMode){
     if(s.player)captainName=(captainName===s.player[0])?null:s.player[0];
-    setCaptainMode(false);updateRating();refreshSimBtn();jump(document.getElementById('simBtn'),'center');return;
+    setCaptainMode(false);updateRating();refreshSimBtn();jump(document.getElementById('predict')||document.getElementById('simBtn'),'center',80,(window.innerWidth||999)<880);return;
   }
   if(s.player){if(captainName===s.player[0])captainName=null;draftedNames.delete(s.player[0]);s.player=null;s.season=null;pending=null;mustPick=false;simSkipCap=false;currentSeason=null;
     placeRow.classList.add('hidden');squadEl.classList.add('hidden');
@@ -854,18 +857,19 @@ function refreshSimBtn(){
   ['simBtn','predict','skipCap'].forEach(id=>{const e=document.getElementById(id);if(e)e.remove();});
   if(!board.every(s=>s.player))return;
   const info=updateRating(),total=info?info.total:0;
-  const predPts=expectedPts(total),label=predictedFinish(predPts);
-  const pb=document.createElement('div');pb.className='predict';pb.id='predict';
-  pb.innerHTML=`<div class="pk">Squad Rating ${showRatings?total.toFixed(1):'··'} · Prediction</div>`+
-    `<div class="pf">${label}</div>`+
-    `<div class="pp">Projected <b>${showRatings?predPts+' pts':'—'}</b> across 38 games. Now go and beat it.</div>`;
-  instruct.insertAdjacentElement('afterend',pb);
   if(!captainName&&!simSkipCap){
     const cg=document.createElement('button');cg.className='sim-btn';cg.id='simBtn';cg.textContent='🅒 Choose Your Captain';
-    cg.addEventListener('click',()=>setCaptainMode(true));pb.insertAdjacentElement('afterend',cg);
+    cg.addEventListener('click',()=>{setCaptainMode(true);jump(document.getElementById('pitch'),'start',60,(window.innerWidth||999)<880);});
+    instruct.insertAdjacentElement('afterend',cg);
     const sk=document.createElement('button');sk.className='ghost-btn';sk.id='skipCap';sk.style.marginTop='7px';sk.textContent='Simulate without a captain';
     sk.addEventListener('click',()=>{simSkipCap=true;refreshSimBtn();});cg.insertAdjacentElement('afterend',sk);
   }else{
+    const predPts=expectedPts(total),pos=predictedPosition(predPts);
+    const pb=document.createElement('div');pb.className='predict';pb.id='predict';
+    pb.innerHTML=`<div class="pk">Squad Rating ${showRatings?total.toFixed(1):'··'} · Prediction</div>`+
+      `<div class="pf">Predicted finish: ${ordinal(pos)}</div>`+
+      `<div class="pp">Projected <b>${showRatings?predPts+' pts':'—'}</b> across 38. Now go and beat it.</div>`;
+    instruct.insertAdjacentElement('afterend',pb);
     const b=document.createElement('button');b.className='sim-btn';b.id='simBtn';b.textContent='▶ Simulate The Season';
     b.addEventListener('click',simulate);pb.insertAdjacentElement('afterend',b);
   }
@@ -933,13 +937,14 @@ function simulate(){
 }
 function showResults(o){
   const el=document.getElementById('finalLine');
-  const predPts=expectedPts(o.rating),diff=o.pts-predPts,pl=predictedFinish(predPts);
+  const predPts=expectedPts(o.rating);
+  const predPos=predictedPosition(predPts),actPos=o.trophies.league?1:predictedPosition(o.pts);
   const treble=o.trophies.league&&o.trophies.fa&&o.trophies.cl;
   let v,sub;
   if(o.perfect){v='38–0. INVINCIBLE+';sub='Played 38, won 38. The greatest season ever simulated — nothing left to conquer.';}
   else if(o.l===0){v='UNBEATEN';sub=`${o.w}W ${o.d}D 0L · ${o.pts} pts. Not perfect — but they never lost. The Invincibles nod.`;}
   else{v=o.league.toUpperCase();sub=`${o.w}W ${o.d}D ${o.l}L · ${o.pts} pts.`;}
-  const tag=diff>=6?` Overperformed the <b>${pl}</b> call by ${diff} pts.`:diff<=-6?` Fell ${-diff} pts shy of the <b>${pl}</b> call.`:` Right on the <b>${pl}</b> prediction.`;
+  const tag=actPos<predPos?` Beat the predicted <b>${ordinal(predPos)}</b> finish — came <b>${ordinal(actPos)}</b>.`:actPos>predPos?` Predicted <b>${ordinal(predPos)}</b>, finished <b>${ordinal(actPos)}</b>.`:` Bang on the predicted <b>${ordinal(predPos)}</b> finish.`;
   const byG=[...o.xi].sort((a,b)=>b.g-a.g)[0];
   const byA=[...o.xi].sort((a,b)=>b.a-a.a)[0];
   const gk=o.xi.find(p=>p.pos==='GK')||[...o.xi].sort((a,b)=>b.cs-a.cs)[0];
@@ -959,7 +964,7 @@ function showResults(o){
   const rows=[...o.xi].sort((a,b)=>(b.g+b.a)-(a.g+a.a)||b.cs-a.cs).map(p=>
     `<div class="ptr"><span class="pp2" style="background:${posColor(p.pos)}">${p.pos}</span>`+
     `<span class="pn">${p.name}</span>`+
-    `<span class="pc g">${p.g||'·'}</span><span class="pc a">${p.a||'·'}</span><span class="pc c">${p.cs||'·'}</span></div>`).join('');
+    `<span class="pc gl">${p.g||'·'}</span><span class="pc a">${p.a||'·'}</span><span class="pc c">${p.cs||'·'}</span></div>`).join('');
   const ptab=`<div class="ptab"><div class="ptr head"><span class="pp2" style="background:transparent;color:#c7a98f">POS</span><span class="pn">Player</span><span class="pc">G</span><span class="pc">A</span><span class="pc">CS</span></div>${rows}</div>`;
   const statcards=`<div class="statcards">`+
     `<div class="statcard"><div class="sn">${o.cs}</div><div class="sl">Clean Sheets</div></div>`+
@@ -968,7 +973,7 @@ function showResults(o){
     `<div class="statcard"><div class="sn sm">${o.hiSc.gf}–${o.hiSc.ga}</div><div class="sl">Highest-Scoring · ${o.hiSc.opp}</div></div>`+
     `</div>`;
   const feed=[...o.lines].map((x,i)=>Object.assign({i},x)).sort((a,b)=>(b.gf+b.ga)-(a.gf+a.ga)).slice(0,6).map(x=>
-    `<div class="frow ${x.r==='w'&&x.gf-x.ga>=3?'big':''}"><span class="fsc">${x.gf}–${x.ga}</span>`+
+    `<div class="frow ${x.r==='w'&&x.gf-x.ga>=3?'feat':''}"><span class="fsc">${x.gf}–${x.ga}</span>`+
     `<span class="fop">${x.r==='w'?'beat':x.r==='d'?'drew':'lost to'} <b>${x.opp}</b></span></div>`).join('');
   const all=ALLTIME.map(a=>({tm:a[0],yr:a[1],rt:a[2],you:false})).concat([{tm:'YOUR XI',yr:'this sim',rt:o.rating,you:true}]).sort((a,b)=>b.rt-a.rt);
   const myRank=all.findIndex(a=>a.you)+1;
