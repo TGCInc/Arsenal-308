@@ -76,12 +76,13 @@
   .box{position:absolute;left:50%;transform:translateX(-50%);width:48%;height:12%;border:2px solid rgba(255,255,255,.3)}
   .box.top{top:10px;border-top:none;border-radius:0 0 6px 6px}.box.bot{bottom:10px;border-bottom:none;border-radius:6px 6px 0 0}
 
-  .slot{position:absolute;transform:translate(-50%,-50%);width:72px;text-align:center;cursor:pointer}
+  .slot{position:absolute;transform:translate(-50%,-50%);width:72px;text-align:center;pointer-events:none}
+  .slot .disc{pointer-events:auto;cursor:pointer}
   .disc{width:48px;height:48px;margin:0 auto;border-radius:50%;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;
     font-family:'Big Shoulders Display';font-weight:900;font-size:21px;color:var(--ink);
     background:radial-gradient(circle at 36% 28%,#fff,var(--cream2));
     box-shadow:0 4px 8px rgba(0,0,0,.45), inset 0 0 0 3px rgba(231,188,87,.0);transition:transform .12s,box-shadow .12s}
-  .slot:active .disc{transform:scale(.93)}
+  .slot .disc:active{transform:scale(.93)}
   .slot.filled .disc{box-shadow:0 4px 8px rgba(0,0,0,.45), inset 0 0 0 3px rgba(231,188,87,.85)}
   .slot.empty .disc{background:rgba(255,255,255,.12);border-style:dashed;border-color:rgba(255,255,255,.7);color:rgba(255,255,255,.9);font-size:11px;font-weight:800}
   .slot.valid .disc{animation:glow 1s infinite;border-color:var(--gold);border-style:solid;background:rgba(231,188,87,.28);color:#fff}
@@ -233,6 +234,15 @@
   .frow .fsc{font-family:'Spline Sans Mono';font-weight:700;font-size:13px;flex:none;width:40px;text-align:center;color:var(--ink)}
   .frow .fop{flex:1;min-width:0;color:#6b5b50}.frow .fop b{color:var(--ink)}
   .frow.feat{background:linear-gradient(90deg,rgba(31,122,58,.16),var(--cream2))}
+  .frow .frd{font-family:'Spline Sans Mono';font-weight:700;font-size:9px;letter-spacing:.03em;text-transform:uppercase;color:#9b8a7d;flex:none;width:58px;text-align:left;line-height:1.15}
+  .frow.wln{border-left:5px solid #1f7a3a}
+  .frow.lss{border-left:5px solid #b23b3b}
+  .frow.drw{border-left:5px solid #c9a23f}
+  details.more{margin-top:9px}
+  details.more>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:7px;font-family:'Spline Sans Mono';font-weight:700;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);background:var(--cream2);border:2px solid var(--ink);border-radius:8px;padding:7px 12px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none}
+  details.more>summary::-webkit-details-marker{display:none}
+  details.more>summary::after{content:'\25be';font-size:10px}
+  details.more[open]>summary::after{content:'\25b4'}
   .atab{border:2px solid var(--ink);border-radius:11px;overflow:hidden}
   .atr{display:flex;align-items:center;gap:9px;padding:7px 10px;border-bottom:1px solid rgba(35,23,18,.12);background:var(--cream2);font-size:12.5px}
   .atr:last-child{border-bottom:none}
@@ -633,11 +643,41 @@ const GW={ST:10,CF:10,RW:6,LW:6,CAM:5,RM:4,LM:4,CM:3,CDM:1.2,RWB:1.5,LWB:1.5,RB:
 const AW={CAM:8,RW:7,LW:7,RM:7,LM:7,CM:5,ST:4,CF:4,CDM:2,RWB:3,LWB:3,RB:2.5,LB:2.5,CB:.8,GK:.2};
 const DEF=["GK","CB","RB","LB","RWB","LWB"];
 const wpick=w=>{let t=w.reduce((a,b)=>a+b,0),x=Math.random()*t;for(let i=0;i<w.length;i++){if((x-=w[i])<=0)return i;}return w.length-1;};
-function cupRun(r,names,base,slope,mid,lo,hi){
-  const p=Math.max(lo,Math.min(hi,base+(r-mid)*slope));
-  for(let i=0;i<names.length;i++){if(Math.random()>=p)return {won:false,out:names[i]};}
-  return {won:true,out:null};
+function tieScore(o){
+  if(o==='d'){const g=Math.min(3,pois(.9));return {gf:g,ga:g};}
+  if(o==='w'){const gf=1+pois(.75),ga=Math.max(0,Math.min(gf-1,pois(.5)));return {gf:gf,ga:ga};}
+  const ga=1+pois(.75),gf=Math.max(0,Math.min(ga-1,pois(.5)));return {gf:gf,ga:ga};
 }
+function rOpp(prev){let o;do{o=OPP[Math.floor(Math.random()*OPP.length)];}while(o===prev&&OPP.length>1);return o;}
+function knockoutTie(adv,prev){const opp=rOpp(prev);
+  if(Math.random()<.26){const g=1+pois(.7);return {opp:opp,gf:g,ga:g,won:adv,pens:true};}
+  const sc=tieScore(adv?'w':'l');return {opp:opp,gf:sc.gf,ga:sc.ga,won:adv,pens:false};
+}
+function faCupRun(r){
+  const rounds=['Third Round','Fourth Round','Fifth Round','Quarter-Final','Semi-Final','Final'];
+  const wp=Math.max(.18,Math.min(.9,.5+(r-84)*.03));
+  const results=[];let won=false,prev=null;
+  for(let i=0;i<rounds.length;i++){const adv=Math.random()<wp,t=knockoutTie(adv,prev);prev=t.opp;
+    results.push({round:rounds[i],opp:t.opp,gf:t.gf,ga:t.ga,won:t.won,pens:t.pens});
+    if(!adv)break;if(i===rounds.length-1)won=true;}
+  return {won:won,results:results};
+}
+function clRun(r){
+  const results=[];let prev=null,pts=0;
+  const gw=Math.max(.2,Math.min(.82,.42+(r-85)*.03));
+  for(let i=1;i<=6;i++){const x=Math.random(),rr=x<gw?'w':x<gw+.26?'d':'l',sc=tieScore(rr),opp=rOpp(prev);prev=opp;
+    pts+=rr==='w'?3:rr==='d'?1:0;
+    results.push({round:'Group · MD'+i,opp:opp,gf:sc.gf,ga:sc.ga,won:rr==='w',drew:rr==='d',group:true});}
+  if(pts<8)return {won:false,qualified:false,groupPts:pts,results:results};
+  const rounds=['Round of 16','Quarter-Final','Semi-Final','Final'];
+  const kw=Math.max(.2,Math.min(.85,.5+(r-87)*.03));let won=false;
+  for(let i=0;i<rounds.length;i++){const adv=Math.random()<kw,t=knockoutTie(adv,prev);prev=t.opp;
+    results.push({round:rounds[i],opp:t.opp,gf:t.gf,ga:t.ga,won:t.won,pens:t.pens});
+    if(!adv)break;if(i===rounds.length-1)won=true;}
+  return {won:won,qualified:true,groupPts:pts,results:results};
+}
+function cupVerb(r){if(r.pens)return r.won?'won on pens vs':'lost on pens to';if(r.won)return 'beat';if(r.drew||r.gf===r.ga)return 'drew with';return 'lost to';}
+function mkRow(gf,ga,opp,verb,round,cls){return '<div class="frow '+(cls||'')+'">'+(round?'<span class="frd">'+round+'</span>':'')+'<span class="fsc">'+gf+'–'+ga+'</span><span class="fop">'+verb+' <b>'+opp+'</b></span></div>';}
 
 const pitch=document.getElementById('pitch'),reel=document.getElementById('reel'),reelYr=document.getElementById('reelYr'),reelTh=document.getElementById('reelTh');
 const RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -921,8 +961,8 @@ function simulate(){
   }
   const pts=w*3+d, perfect=(w===38);
   const league=perfect||pts>=86?'Champions':pts>=78?'Runners-Up':pts>=72?'Top Four':pts>=62?'Europa':pts>=50?'Mid-Table':'Lower Half';
-  const fa=cupRun(rating,['Third Round','Fourth Round','Fifth Round','Quarter-Final','Semi-Final','Final'],.5,.03,84,.18,.9);
-  const cl=cupRun(rating,['Round of 16','Quarter-Final','Semi-Final','Final'],.5,.03,87,.2,.85);
+  const fa=faCupRun(rating);
+  const cl=clRun(rating);
   const trophies={league:league==='Champions',fa:fa.won,cl:cl.won};
   tray.classList.add('hidden');ticker.classList.remove('hidden');setStage('sim');jump(ticker,'start');
   ticker.innerHTML=`<div class="big" id="bigScore">0</div><div class="biglbl">POINTS</div>
@@ -954,7 +994,7 @@ function showResults(o){
     `<div class="trophy ${o.trophies.fa?'won':''}"><div class="ti">🏆</div><div class="tl">FA Cup</div></div>`+
     `<div class="trophy ${o.trophies.cl?'won':''}"><div class="ti">🏆</div><div class="tl">Champions Lg</div></div>`+
     `</div>${treble?'<div class="treble-ban">★ THE TREBLE ★</div>':''}`;
-  const cupNote=`${o.trophies.league?'League champions. ':'Pipped to the title. '}${o.trophies.fa?'FA Cup won. ':'FA Cup exit: '+o.fa.out+'. '}${o.trophies.cl?'Champions League WON.':'CL exit: '+o.cl.out+'.'}`;
+  const cupNote=`${o.trophies.league?'League champions.':'Pipped to the title.'} ${o.trophies.fa?'Won the FA Cup.':'FA Cup eluded them.'} ${o.trophies.cl?'Kings of Europe.':'No European crown.'}`;
   const awards=`<div class="awards">`+
     `<div class="award"><div class="ak">⚽ Golden Boot</div><div class="an">${byG.name}</div><div class="as">${byG.g} goals</div></div>`+
     `<div class="award"><div class="ak">🎯 Playmaker</div><div class="an">${byA.name}</div><div class="as">${byA.a} assists</div></div>`+
@@ -972,9 +1012,16 @@ function showResults(o){
     `<div class="statcard"><div class="sn sm win">${o.big.gf}–${o.big.ga}</div><div class="sl">Biggest Win · ${o.big.opp}</div></div>`+
     `<div class="statcard"><div class="sn sm">${o.hiSc.gf}–${o.hiSc.ga}</div><div class="sl">Highest-Scoring · ${o.hiSc.opp}</div></div>`+
     `</div>`;
-  const feed=[...o.lines].map((x,i)=>Object.assign({i},x)).sort((a,b)=>(b.gf+b.ga)-(a.gf+a.ga)).slice(0,6).map(x=>
-    `<div class="frow ${x.r==='w'&&x.gf-x.ga>=3?'feat':''}"><span class="fsc">${x.gf}–${x.ga}</span>`+
-    `<span class="fop">${x.r==='w'?'beat':x.r==='d'?'drew':'lost to'} <b>${x.opp}</b></span></div>`).join('');
+  const Lr=o.lines.map((x,i)=>mkRow(x.gf,x.ga,x.opp,x.r==='w'?'beat':x.r==='d'?'drew':'lost to','MW'+(i+1),x.r==='w'?'wln':x.r==='l'?'lss':'drw'));
+  const leagueSec=`<div class="feed">${Lr.slice(0,5).join('')}</div><details class="more"><summary>Show all ${o.lines.length} results</summary><div class="feed" style="margin-top:6px">${Lr.slice(5).join('')}</div></details>`;
+  const faLast=o.fa.results[o.fa.results.length-1];
+  const faList=o.fa.results.map(r=>mkRow(r.gf,r.ga,r.opp,cupVerb(r),r.round,r.won?'wln':(r.gf===r.ga&&!r.pens?'drw':'lss'))).join('');
+  const faExit=o.fa.won?'🏆 Winners — beat '+faLast.opp+' in the final':'Knocked out in the '+faLast.round;
+  const faSec=`<div class="vsub" style="margin:0 0 8px">${faExit}</div><details class="more"><summary>Show the run · ${o.fa.results.length} ties</summary><div class="feed" style="margin-top:6px">${faList}</div></details>`;
+  const clLast=o.cl.results[o.cl.results.length-1];
+  const clList=o.cl.results.map(r=>mkRow(r.gf,r.ga,r.opp,cupVerb(r),r.round,r.won?'wln':r.drew?'drw':(r.gf===r.ga&&!r.pens?'drw':'lss'))).join('');
+  const clExit=o.cl.won?'🏆 Champions of Europe':(o.cl.qualified?'Knocked out in the '+clLast.round:'Eliminated in the group stage');
+  const clSec=`<div class="vsub" style="margin:0 0 8px">${clExit} · group stage ${o.cl.groupPts} pts</div><details class="more"><summary>Show the run · ${o.cl.results.length} games</summary><div class="feed" style="margin-top:6px">${clList}</div></details>`;
   const all=ALLTIME.map(a=>({tm:a[0],yr:a[1],rt:a[2],you:false})).concat([{tm:'YOUR XI',yr:'this sim',rt:o.rating,you:true}]).sort((a,b)=>b.rt-a.rt);
   const myRank=all.findIndex(a=>a.you)+1;
   const atRows=all.map((a,i)=>`<div class="atr ${a.you?'you':''}"><span class="arnk">${i+1}</span>`+
@@ -985,7 +1032,9 @@ function showResults(o){
     `<div class="res-sec"><div class="res-h"><span>Season Awards</span></div>${awards}</div>`+
     `<div class="res-sec"><div class="res-h"><span>Squad · G / A / CS</span></div>${ptab}</div>`+
     `<div class="res-sec"><div class="res-h"><span>Season Stats</span></div>${statcards}</div>`+
-    `<div class="res-sec"><div class="res-h"><span>Notable Results</span></div><div class="feed">${feed}</div></div>`+
+    `<div class="res-sec"><div class="res-h"><span>Premier League</span></div><div class="vsub" style="margin:0 0 8px">${o.w}W ${o.d}D ${o.l}L · ${o.pts} pts · finished <b>${ordinal(actPos)}</b></div>${leagueSec}</div>`+
+    `<div class="res-sec"><div class="res-h"><span>FA Cup</span></div>${faSec}</div>`+
+    `<div class="res-sec"><div class="res-h"><span>Champions League</span></div>${clSec}</div>`+
     `<div class="res-sec"><div class="res-h"><span>Greatest Teams Of All Time</span></div>`+
       `<div class="vsub" style="margin:0 0 8px">Your XI ranks <b>#${myRank}</b> of all time by rating.</div><div class="atab">${atRows}</div></div>`+
     `<div class="res-sec"><div class="saverow"><input id="initials" maxlength="14" placeholder="Your name"><button class="ghost-btn" id="saveBtn">Save</button></div>`+
